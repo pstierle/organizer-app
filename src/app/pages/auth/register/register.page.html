@@ -1,0 +1,37 @@
+<div class="flex items-center justify-center mt-32">
+  <div class="border border-gray-500 rounded-sm">
+    <div class="font-semibold bg-zinc-700 py-2 px-6 text-zinc-300">
+      Registrieren
+    </div>
+    <form
+      [formGroup]="registerForm"
+      (ngSubmit)="onSubmit()"
+      class="flex flex-col gap-5 py-6 px-14"
+      *ngIf="!emailSent; else verfifyEmail"
+    >
+      <app-form-input label="E-Mail" formControlName="email"></app-form-input>
+      <app-form-input
+        label="Benutzername"
+        formControlName="name"
+      ></app-form-input>
+      <app-form-input
+        type="password"
+        label="Passwort"
+        formControlName="password"
+      ></app-form-input>
+
+      <div class="flex justify-between">
+        <app-button>
+          <a routerLink="/auth/login">Einloggen</a>
+        </app-button>
+        <app-button type="submit" [highlight]="true">Login</app-button>
+      </div>
+    </form>
+    <ng-template #verfifyEmail>
+      <p class="p-10">
+        Es wurde eine Bestätigungs Email an {{registerForm.get("email")?.value}}
+        gesedet. Bestätige diese Email um die Registrerung abzuschließen.
+      </p>
+    </ng-template>
+  </div>
+</div>

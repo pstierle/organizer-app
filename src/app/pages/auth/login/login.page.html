@@ -1,0 +1,24 @@
+<div class="flex items-center justify-center mt-32">
+  <div class="border border-gray-500 rounded-sm">
+    <div class="font-semibold bg-zinc-700 py-2 px-6 text-zinc-300">Login</div>
+    <form
+      [formGroup]="loginForm"
+      (ngSubmit)="onSubmit()"
+      class="flex flex-col gap-5 py-6 px-14"
+    >
+      <app-form-input label="E-Mail" formControlName="email"></app-form-input>
+      <app-form-input
+        type="password"
+        label="Passwort"
+        formControlName="password"
+      ></app-form-input>
+
+      <div class="flex justify-between">
+        <app-button>
+          <a routerLink="/auth/register">Registrieren</a>
+        </app-button>
+        <app-button type="submit" [highlight]="true">Login</app-button>
+      </div>
+    </form>
+  </div>
+</div>

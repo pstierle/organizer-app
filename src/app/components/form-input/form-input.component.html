@@ -1,0 +1,9 @@
+<div>
+  <p class="text-sm">{{ label }}</p>
+  <input
+    class="rounded focus:ring-[1px] ring-blue-200 outline-none border-none bg-zinc-700 py-1 px-2"
+    [formControl]="input"
+    [type]="type"
+    (focus)="doInput()"
+    (blur)="doBlur()" />
+</div>

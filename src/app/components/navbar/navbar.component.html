@@ -1,6 +1,12 @@
-<div class="border-b border-b-gray-500 p-2 flex">
-  <button class="flex gap-2 items-center" (click)="handleLogout()">
-    <fa-icon [icon]="faArrowRightFromBracket"></fa-icon>
-    <p class="text-sm">Logout</p>
-  </button>
+<div class="border-b border-b-gray-500 p-2 flex justify-between">
+  <p>Logo</p>
+  <div class="flex gap-3 items-center" *ngIf="user">
+    <p>{{ user.name }}</p>
+    <app-button (click)="handleLogout()">
+      <div class="flex gap-2 items-center">
+        <fa-icon [icon]="faArrowRightFromBracket"></fa-icon>
+        <p class="text-sm">Logout</p>
+      </div>
+    </app-button>
+  </div>
 </div>
