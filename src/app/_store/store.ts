@@ -1,12 +1,12 @@
-import { IUser } from './../_models/IUser';
+import { IUniversity } from './../_models/IUniversity';
 import { HttpErrorResponse } from '@angular/common/http';
 
-export type UserState = {
-  user?: IUser;
+export type UniversitiesState = {
+  universities: IUniversity[];
   current: 'loading' | 'success' | 'error';
   error?: HttpErrorResponse;
 };
 
 export type AppState = {
-  userState: UserState;
+  universitiesState: UniversitiesState;
 };

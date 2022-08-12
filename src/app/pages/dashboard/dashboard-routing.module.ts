@@ -6,7 +6,30 @@ const routes: Routes = [
   {
     path: '',
     component: DashboardPage,
-    children: [],
+    children: [
+      {
+        path: 'home',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('./home/home.module').then((m) => m.HomeModule),
+          },
+        ],
+      },
+      {
+        path: 'settings',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('./settings/settings.module').then(
+                (m) => m.SettingsModule
+              ),
+          },
+        ],
+      },
+    ],
   },
 ];
 

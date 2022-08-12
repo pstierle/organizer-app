@@ -1,3 +1,4 @@
+import { universitiesReducer } from './_store/universities/universities.reducer';
 import { UiModule } from './components/ui-module';
 import { AuthService } from './_services/auth.service';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
@@ -9,6 +10,8 @@ import { NotificationsComponent } from './components/notifications/notifications
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EffectsModule } from '@ngrx/effects';
+import { UniversitiesEffects } from './_store/universities/universities.effects';
 
 function initializeUser(authService: AuthService): () => any {
   return () => authService.init();
@@ -22,8 +25,11 @@ function initializeUser(authService: AuthService): () => any {
     FormsModule,
     UiModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({}, {}),
     FontAwesomeModule,
+    EffectsModule.forRoot([UniversitiesEffects]),
+    StoreModule.forRoot({
+      universitiesState: universitiesReducer,
+    }),
   ],
   providers: [
     {

@@ -1,8 +1,13 @@
 <button
-  class="text-zinc-200 py-1 px-2 rounded text-sm border border-gray-600"
-  [class]="highlight ? 'bg-blue-400' : 'bg-zinc-700'"
+  class="text-zinc-200 py-1 px-2 rounded text-sm border border-gray-600 transition-colors"
+  [class]="
+    highlight
+      ? 'bg-blue-400 hover:bg-blue-300'
+      : 'bg-zinc-700 hover:bg-zinc-600 hover:border-blue-300'
+  "
   (click)="(handleClick)"
   [disabled]="disabled"
-  [type]="type">
+  [type]="type"
+>
   <ng-content></ng-content>
 </button>

@@ -19,12 +19,17 @@
         label="Passwort"
         formControlName="password"
       ></app-form-input>
+      <app-select
+        label="Universität"
+        [options]="universitiesAsOptions"
+        formControlName="university_id"
+      ></app-select>
 
       <div class="flex justify-between">
         <app-button>
           <a routerLink="/auth/login">Einloggen</a>
         </app-button>
-        <app-button type="submit" [highlight]="true">Login</app-button>
+        <app-button type="submit" [highlight]="true">Registrieren</app-button>
       </div>
     </form>
     <ng-template #verfifyEmail>

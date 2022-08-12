@@ -1,1 +1,17 @@
-<p>dashboard</p>
+<div class="min-h-screen flex">
+  <div
+    class="min-h-screen border-r border-zinc-600 w-16 flex flex-col gap-6 items-center p-6"
+  >
+    <app-dashboard-nav-item
+      *ngFor="let navItem of navItems"
+      [href]="navItem.route"
+      [label]="navItem.label"
+      [highlight]="navItem.route === currentRoute"
+    >
+      <fa-icon [icon]="navItem.icon"></fa-icon>
+    </app-dashboard-nav-item>
+  </div>
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+</div>

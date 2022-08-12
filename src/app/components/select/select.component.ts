@@ -7,23 +7,23 @@ import {
 import { Subject, Subscription, takeUntil } from 'rxjs';
 
 @Component({
-  selector: 'app-form-input',
-  templateUrl: './form-input.component.html',
+  selector: 'app-select',
+  templateUrl: './select.component.html',
   styleUrls: [],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useExisting: forwardRef(() => FormInputComponent),
+      useExisting: forwardRef(() => SelectComponent),
     },
   ],
 })
-export class FormInputComponent
+export class SelectComponent
   implements OnInit, ControlValueAccessor, OnDestroy
 {
   @Input() label: string = '';
 
-  @Input() type: 'text' | 'number' | 'password' = 'text';
+  @Input() options: { label: string; value: any }[] = [];
 
   @Input() input = new FormControl('');
 

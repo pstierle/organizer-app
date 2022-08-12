@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/_services/auth.service';
+import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
+import { faGear } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,6 +9,24 @@ import { AuthService } from 'src/app/_services/auth.service';
   styleUrls: [],
 })
 export class DashboardPage implements OnInit {
-  constructor(private authService: AuthService) {}
-  ngOnInit(): void {}
+  homeIcon = faHome;
+  currentRoute = '/dashboard';
+  navItems = [
+    {
+      route: '/dashboard/home',
+      icon: faHome,
+      label: 'Home',
+    },
+    {
+      route: '/dashboard/settings',
+      icon: faGear,
+      label: 'Einstellungen',
+    },
+  ];
+
+  constructor(private router: Router) {}
+
+  ngOnInit(): void {
+    this.currentRoute = this.router.url;
+  }
 }

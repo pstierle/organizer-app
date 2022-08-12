@@ -75,7 +75,12 @@ export class AuthService {
     }
   }
 
-  async signUp(email: string, password: string, name: string) {
+  async signUp(
+    email: string,
+    password: string,
+    name: string,
+    university_id: string | undefined = undefined
+  ) {
     const { user, error } = await this.supabase.auth.signUp({
       email,
       password,
@@ -87,7 +92,7 @@ export class AuthService {
     if (user) {
       const { data, error } = await this.supabase
         .from<IUser>('users')
-        .insert({ id: user.id, name: name })
+        .insert({ id: user.id, name: name, university_id: university_id })
         .single();
       if (error) {
         this.handleError(error.message);
