@@ -167,7 +167,6 @@ export class AuthService {
     const { data } = await this.supabase.storage
       .from('profile-images')
       .download(this.profileImageName);
-    console.log(data);
     this.profileImageSubject.next(data);
   }
 

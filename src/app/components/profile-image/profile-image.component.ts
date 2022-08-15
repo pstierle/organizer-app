@@ -1,4 +1,4 @@
-import { Subscription } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/_services/auth.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -11,6 +11,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class ProfileImageComponent implements OnInit, OnDestroy {
   subscription: Subscription | null = null;
   profileImage: any = null;
+  destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private authService: AuthService,
@@ -18,8 +19,9 @@ export class ProfileImageComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.subscription = this.authService
+    this.authService
       .getProfileImage$()
+      .pipe(takeUntil(this.destroy$))
       .subscribe((image) => {
         if (!image) {
           this.profileImage = null;
@@ -31,7 +33,8 @@ export class ProfileImageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.unsubscribe();
   }
 
   get userInitials() {
