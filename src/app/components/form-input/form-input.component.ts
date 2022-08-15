@@ -73,6 +73,6 @@ export class FormInputComponent
 
   doBlur() {
     this.focused = false;
-    this.onTouched();
+    if (this.onTouched) this.onTouched();
   }
 }

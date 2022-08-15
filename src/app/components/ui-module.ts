@@ -1,3 +1,7 @@
+import { SpinnerIconComponent } from './icons/spinner-icon/spinner-icon.component';
+import { RouterModule } from '@angular/router';
+import { AddSubjectComponent } from './modal/add-subject/add-subject.component';
+import { SubjectsOverviewComponent } from './subjects-overview/subjects-overview.component';
 import { FileInputComponent } from './file-input/file-input.component';
 import { ProfileImageComponent } from './profile-image/profile-image.component';
 import { ContainerComponent } from './container/container.component';
@@ -13,7 +17,13 @@ import { CommonModule } from '@angular/common';
 import { UpdateProfileImageComponent } from './update-profile-image/update-profile-image.component';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, FontAwesomeModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    FontAwesomeModule,
+    RouterModule,
+  ],
   declarations: [
     ButtonComponent,
     FormInputComponent,
@@ -24,6 +34,9 @@ import { UpdateProfileImageComponent } from './update-profile-image/update-profi
     UpdateProfileImageComponent,
     ProfileImageComponent,
     FileInputComponent,
+    SubjectsOverviewComponent,
+    AddSubjectComponent,
+    SpinnerIconComponent,
   ],
   exports: [
     ButtonComponent,
@@ -35,6 +48,10 @@ import { UpdateProfileImageComponent } from './update-profile-image/update-profi
     UpdateProfileImageComponent,
     ProfileImageComponent,
     FileInputComponent,
+    SubjectsOverviewComponent,
+    AddSubjectComponent,
+    SpinnerIconComponent,
   ],
+  providers: [AddSubjectComponent],
 })
 export class UiModule {}

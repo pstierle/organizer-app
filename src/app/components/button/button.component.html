@@ -1,9 +1,9 @@
 <button
-  class="text-zinc-200 py-1 px-2 rounded text-sm border border-gray-600 transition-colors disabled:cursor-not-allowed disabled:opacity-70"
+  class="text-neutral-200 py-1 px-2 rounded text-sm border border-gray-600 transition-colors disabled:cursor-not-allowed disabled:opacity-70"
   [class]="
     highlight
       ? 'bg-blue-400 hover:bg-blue-300'
-      : 'bg-zinc-700 hover:bg-zinc-600 hover:border-blue-300'
+      : 'bg-neutral-700 hover:bg-neutral-600 hover:border-blue-300'
   "
   (click)="(handleClick)"
   [disabled]="disabled"
@@ -11,8 +11,6 @@
 >
   <ng-content *ngIf="!loading; else spinner"></ng-content>
   <ng-template #spinner>
-    <div class="text-zinc-200 animate-spin">
-      <fa-icon [icon]="spinnerIcon"></fa-icon>
-    </div>
+    <app-spinner-icon></app-spinner-icon>
   </ng-template>
 </button>

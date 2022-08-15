@@ -1,0 +1,20 @@
+<div
+  class="modal flex items-center justify-center px-10 bg-neutral-800 min-h-screen flex-col"
+>
+  <form
+    [formGroup]="addForm"
+    (ngSubmit)="handleSubmit()"
+    class="flex flex-col gap-5"
+  >
+    <h1 class="text-neutral-200">Fach hinzufügen</h1>
+    <app-form-input label="Name" formControlName="name"></app-form-input>
+    <app-form-input
+      type="number"
+      label="Semester"
+      formControlName="semester"
+    ></app-form-input>
+    <app-button [disabled]="!addForm.valid" type="submit"
+      >Hinzufügen</app-button
+    >
+  </form>
+</div>

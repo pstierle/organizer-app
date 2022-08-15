@@ -2,10 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
-  @apply text-zinc-400;
+* {
+  @apply text-neutral-400;
 }
 
-body{
-  @apply bg-zinc-800;
+body {
+  @apply bg-neutral-800;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.471);
+}
+
+.modal {
+  animation: fadeIn 0.1s linear;
+}
+
+@keyframes fadeIn {
+  0% {
+    margin-left: 100%;
+  }
+
+  75% {
+    margin-left: 50%;
+  }
+
+  100% {
+    margin-left: 0%;
+  }
+}
+
+.z-1001 {
+  z-index: 1001;
 }

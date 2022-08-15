@@ -1,6 +1,6 @@
-<div class="absolute p-2">
+<div class="absolute p-2 z-1001">
   <div
-    *ngFor="let notification of notifications"
+    *ngFor="let notification of notifications$ | async"
     class="p-2 rounded mt-1 transition-all"
     [ngClass]="
       notification.type === 'warning'
@@ -12,9 +12,9 @@
         : ''
     "
   >
-    <p *ngIf="notification.header" class="font-semibold text-zinc-200">
+    <p *ngIf="notification.header" class="font-semibold text-neutral-200">
       {{ notification.header }}
     </p>
-    <p class="text-zinc-200">{{ notification.message }}</p>
+    <p class="text-neutral-200">{{ notification.message }}</p>
   </div>
 </div>

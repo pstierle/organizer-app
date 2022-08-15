@@ -1,3 +1,4 @@
+import { ISubject } from './../_models/ISubject';
 import { ICourseArea } from './../_models/ICourseArea';
 import { IUniversity } from './../_models/IUniversity';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -21,8 +22,15 @@ export type CourseState = {
   error?: HttpErrorResponse;
 };
 
+export type SubjectState = {
+  subjects: ISubject[];
+  current: 'loading' | 'success' | 'error';
+  error?: HttpErrorResponse;
+};
+
 export type AppState = {
-  universitiesState: UniversitiesState;
+  universityState: UniversitiesState;
   courseAreaState: CourseAreasState;
   courseState: CourseState;
+  subjectState: SubjectState;
 };

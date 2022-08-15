@@ -29,6 +29,18 @@ const routes: Routes = [
           },
         ],
       },
+      {
+        path: 'subjects',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('./subjects/subjects.module').then(
+                (m) => m.SubjectsModule
+              ),
+          },
+        ],
+      },
     ],
   },
 ];

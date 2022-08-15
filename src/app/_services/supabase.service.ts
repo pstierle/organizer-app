@@ -29,14 +29,14 @@ export type FilterOperator =
 export type FindFilter = [
   column: string,
   op: FilterOperator,
-  value: string | number | boolean | null
+  value: string | number | boolean | null | undefined
 ];
 
 export type FindOrder = [column: string, ascending?: boolean];
 
 export class BaseService<T> {
   private supabase: SupabaseClient;
-  protected resource: string; // table name
+  protected resource: string;
 
   constructor(resource: string) {
     this.resource = resource;
@@ -63,24 +63,20 @@ export class BaseService<T> {
   ): Observable<T[]> {
     const query = this.supabase.from(this.resource).select(select);
 
-    // filters is an array of FindFilters, so we chain each filter to the query builder
     filters.forEach(([column, op, value]) => {
       query.filter(column, op, value);
     });
 
-    // same as filters, chaining multiple order by queries is possible
     orders.forEach(([column, ascending]) => {
       query.order(column, { ascending });
     });
 
-    // use range for pagination
     if (range) query.range(range[0], range[1]);
 
     return from(query).pipe(map((res) => res.body as T[]));
   }
 
   count(filters: FindFilter[]) {
-    // providing the option `head: true` will only return the count, otherwise results too.
     const query = this.supabase.from(this.resource).select('*', {
       count: 'exact',
       head: true,
@@ -133,7 +129,6 @@ export class BaseService<T> {
     return from(query).pipe(map((res) => res.body as T));
   }
 
-  // helpers for other custom methods you might write in the service. Returns typed result.
   protected returnList(query: any): Observable<T[]> {
     return from(query).pipe(map((res: any) => res.body as T[]));
   }

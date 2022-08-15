@@ -1,3 +1,7 @@
+import { RouterModule } from '@angular/router';
+import { ModalService } from './_services/modal.service';
+import { SubjectEffects } from './_store/subjects/subjects.effects';
+import { subjectsReducer } from './_store/subjects/subjects.reducer';
 import { CourseEffects } from './_store/courses/courses.effects';
 import { coursesReducer } from './_store/courses/courses.reducer';
 import { courseAreaReducer } from './_store/course-areas/course-areas.reducer';
@@ -16,6 +20,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EffectsModule } from '@ngrx/effects';
 import { UniversitiesEffects } from './_store/universities/universities.effects';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 function initializeUser(authService: AuthService): () => any {
   return () => authService.init();
@@ -24,21 +29,25 @@ function initializeUser(authService: AuthService): () => any {
 @NgModule({
   declarations: [AppComponent, NotificationsComponent, NavbarComponent],
   imports: [
+    OverlayModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     UiModule,
     ReactiveFormsModule,
     FontAwesomeModule,
+    RouterModule,
     EffectsModule.forRoot([
       UniversitiesEffects,
       CourseAreasEffects,
       CourseEffects,
+      SubjectEffects,
     ]),
     StoreModule.forRoot({
-      universitiesState: universitiesReducer,
+      universityState: universitiesReducer,
       courseAreaState: courseAreaReducer,
       courseState: coursesReducer,
+      subjectState: subjectsReducer,
     }),
   ],
   providers: [
@@ -48,6 +57,7 @@ function initializeUser(authService: AuthService): () => any {
       deps: [AuthService],
       multi: true,
     },
+    ModalService,
   ],
   bootstrap: [AppComponent],
 })

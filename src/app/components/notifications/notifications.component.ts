@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { INotification } from './../../_models/INotification';
 import { Component, OnInit } from '@angular/core';
 import { NotificationService } from 'src/app/_services/notification.service';
@@ -8,17 +9,11 @@ import { NotificationService } from 'src/app/_services/notification.service';
   styleUrls: ['./notifications.component.scss'],
 })
 export class NotificationsComponent implements OnInit {
-  notifications: INotification[] = [
-    /*     {type: "error", header: "header", message: "Zu wenigeg poas+das"},
-    {type: "warning", header: "header", message: "Zu wenigeg poas+das"},
-    {type: "success", header: "header", message: "Zu wenigeg poas+das"} */
-  ];
+  notifications$!: Observable<INotification[]>;
 
   constructor(private notificationService: NotificationService) {}
 
   ngOnInit(): void {
-    this.notificationService.getNotifications().subscribe((n) => {
-      this.notifications = n;
-    });
+    this.notifications$ = this.notificationService.getNotifications();
   }
 }

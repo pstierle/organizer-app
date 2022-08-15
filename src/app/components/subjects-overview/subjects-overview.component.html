@@ -1,0 +1,23 @@
+<div
+  class="min-h-full p-5 border-r border-neutral-600 flex flex-col items-center"
+>
+  <app-button (click)="handleOpenAddSubjectModal()">Fach hinzufügen</app-button>
+
+  <p class="text-sm mt-10 font-semibold">Alle Fächer</p>
+  <app-spinner-icon
+    class="w-5 h-5 mt-10"
+    *ngIf="isLoading$ | async"
+  ></app-spinner-icon>
+  <a
+    *ngFor="let subject of subjects$ | async"
+    class="hover:text-neutral-200 hover:cursor-pointer my-2 text-sm w-full px-2 py-1 rounded truncate hover:bg-neutral-700 transition-all"
+    [ngClass]="
+      currentRoute === '/dashboard/subjects/detail/' + subject.id
+        ? 'text-neutral-200 bg-neutral-700'
+        : ''
+    "
+    [routerLink]="'/dashboard/subjects/detail/' + subject.id"
+  >
+    {{ subject.name }}
+  </a>
+</div>
