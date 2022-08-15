@@ -1,3 +1,4 @@
+import { ContainerComponent } from './container/container.component';
 import { FormSelectComponent } from './form-select/form-select.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { UpdateUserComponent } from './update-user/update-user.component';
@@ -16,6 +17,7 @@ import { CommonModule } from '@angular/common';
     FormSelectComponent,
     DashboardNavItemComponent,
     UpdateUserComponent,
+    ContainerComponent,
   ],
   exports: [
     ButtonComponent,
@@ -23,6 +25,7 @@ import { CommonModule } from '@angular/common';
     FormSelectComponent,
     DashboardNavItemComponent,
     UpdateUserComponent,
+    ContainerComponent,
   ],
 })
 export class UiModule {}

@@ -1,12 +1,9 @@
 <div class="flex items-center justify-center mt-32">
-  <div class="border border-gray-500 rounded-sm">
-    <div class="font-semibold bg-zinc-700 py-2 px-6 text-zinc-300">
-      Registrieren
-    </div>
+  <app-container header="Registrieren">
     <form
       [formGroup]="registerForm"
       (ngSubmit)="onSubmit()"
-      class="flex flex-col gap-5 py-6 px-14"
+      class="flex flex-col gap-5 px-10"
       *ngIf="!emailSent; else verfifyEmail"
     >
       <div class="flex gap-10">
@@ -53,5 +50,5 @@
         gesedet. Bestätige diese Email um die Registrerung abzuschließen.
       </p>
     </ng-template>
-  </div>
+  </app-container>
 </div>
