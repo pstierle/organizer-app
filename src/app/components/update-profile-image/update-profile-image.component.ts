@@ -7,12 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: [],
 })
 export class UpdateProfileImageComponent implements OnInit {
+  selectedImage: File | null = null;
+
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {}
 
-  handleChange(evt: any) {
-    const file: File | null = evt.target.files[0];
-    if (file) this.authService.updateProfileImage(file);
+  async handleUpdateImage() {
+    if (this.selectedImage)
+      await this.authService.updateProfileImage(this.selectedImage);
   }
 }

@@ -1,3 +1,4 @@
+import { FileInputComponent } from './file-input/file-input.component';
 import { ProfileImageComponent } from './profile-image/profile-image.component';
 import { ContainerComponent } from './container/container.component';
 import { FormSelectComponent } from './form-select/form-select.component';
@@ -22,6 +23,7 @@ import { UpdateProfileImageComponent } from './update-profile-image/update-profi
     ContainerComponent,
     UpdateProfileImageComponent,
     ProfileImageComponent,
+    FileInputComponent,
   ],
   exports: [
     ButtonComponent,
@@ -32,6 +34,7 @@ import { UpdateProfileImageComponent } from './update-profile-image/update-profi
     ContainerComponent,
     UpdateProfileImageComponent,
     ProfileImageComponent,
+    FileInputComponent,
   ],
 })
 export class UiModule {}

@@ -21,9 +21,12 @@ export class ProfileImageComponent implements OnInit, OnDestroy {
     this.subscription = this.authService
       .getProfileImage$()
       .subscribe((image) => {
-        if (!image) return;
-        var url = window.URL.createObjectURL(image);
-        this.profileImage = this.sanitizer.bypassSecurityTrustUrl(url);
+        if (!image) {
+          this.profileImage = null;
+        } else {
+          var url = window.URL.createObjectURL(image);
+          this.profileImage = this.sanitizer.bypassSecurityTrustUrl(url);
+        }
       });
   }
 

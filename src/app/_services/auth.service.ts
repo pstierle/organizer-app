@@ -142,14 +142,18 @@ export class AuthService {
     }
   }
 
-  async updateProfileImage(file: File) {
-    const imageName = `private/${this.authUser?.id}.png`;
+  get profileImageName() {
+    return `private/${this.authUser?.id}`;
+  }
 
-    await this.supabase.storage.from('profile-images').remove([imageName]);
+  async updateProfileImage(file: File) {
+    await this.supabase.storage
+      .from('profile-images')
+      .remove([this.profileImageName]);
 
     const { data, error } = await this.supabase.storage
       .from('profile-images')
-      .upload(imageName, file);
+      .upload(this.profileImageName, file);
 
     if (error) {
       this.handleError(error.message);
@@ -160,16 +164,10 @@ export class AuthService {
   }
 
   async setProfileImage() {
-    console.log(this.authUser?.id);
-    const imageName = `private/${this.authUser?.id}.png`;
-    const { data, error } = await this.supabase.storage
+    const { data } = await this.supabase.storage
       .from('profile-images')
-      .download(imageName);
-
-    if (error) {
-      this.handleError(error.message);
-      return;
-    }
+      .download(this.profileImageName);
+    console.log(data);
     this.profileImageSubject.next(data);
   }
 
