@@ -5,7 +5,7 @@
     <fa-icon [icon]="faGraduationCap" size="2x"></fa-icon>
   </a>
   <div class="flex gap-3 items-center" *ngIf="user">
-    <p class="text-zinc-200">{{ user.name }}</p>
+    <app-profile-image class="w-10 h-10"></app-profile-image>
     <app-button (click)="handleLogout()">
       <div class="flex gap-2 items-center">
         <fa-icon [icon]="faArrowRightFromBracket"></fa-icon>

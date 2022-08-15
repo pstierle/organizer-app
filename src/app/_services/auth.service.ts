@@ -17,6 +17,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class AuthService {
   private supabase: SupabaseClient;
   private userSubject = new BehaviorSubject<IUser | null>(null);
+  private profileImageSubject = new BehaviorSubject<Blob | null>(null);
 
   constructor(
     private notificationService: NotificationService,
@@ -70,8 +71,8 @@ export class AuthService {
       return;
     }
     if (user) {
-      const userData = await this.getUser();
-      this.userSubject.next(userData);
+      await this.setUser();
+      await this.setProfileImage();
       this.router.navigate(['dashboard']);
     }
   }
@@ -113,15 +114,20 @@ export class AuthService {
     return this.userSubject.asObservable();
   }
 
+  getProfileImage$(): Observable<Blob | null> {
+    return this.profileImageSubject.asObservable();
+  }
+
   async signOut() {
     await this.supabase.auth.signOut();
     this.userSubject.next(null);
+    this.profileImageSubject.next(null);
     this.router.navigate(['auth/login']);
   }
 
   async init() {
-    const userData = await this.getUser();
-    this.userSubject.next(userData);
+    await this.setUser();
+    await this.setProfileImage();
   }
 
   async updateProfile(profile: IUser) {
@@ -132,9 +138,44 @@ export class AuthService {
       return;
     }
     if (data) {
-      const userData = await this.getUser();
-      this.userSubject.next(userData);
+      await this.setUser();
     }
+  }
+
+  async updateProfileImage(file: File) {
+    const imageName = `private/${this.authUser?.id}.png`;
+
+    await this.supabase.storage.from('profile-images').remove([imageName]);
+
+    const { data, error } = await this.supabase.storage
+      .from('profile-images')
+      .upload(imageName, file);
+
+    if (error) {
+      this.handleError(error.message);
+      return;
+    }
+
+    await this.setProfileImage();
+  }
+
+  async setProfileImage() {
+    console.log(this.authUser?.id);
+    const imageName = `private/${this.authUser?.id}.png`;
+    const { data, error } = await this.supabase.storage
+      .from('profile-images')
+      .download(imageName);
+
+    if (error) {
+      this.handleError(error.message);
+      return;
+    }
+    this.profileImageSubject.next(data);
+  }
+
+  async setUser() {
+    const userData = await this.getUser();
+    this.userSubject.next(userData);
   }
 
   handleError(message: string) {
