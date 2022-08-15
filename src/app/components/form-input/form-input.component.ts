@@ -28,7 +28,6 @@ export class FormInputComponent
   @Input() input = new FormControl('');
 
   unsubscribe$: Subject<void> = new Subject<void>();
-  subscription: Subscription | null = null;
 
   focused = false;
 
@@ -36,7 +35,7 @@ export class FormInputComponent
   private onTouched: any;
 
   ngOnInit(): void {
-    this.subscription = this.input.valueChanges
+    this.input.valueChanges
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((_) => {
         if (this.onChange) this.onChange(this.input.value);

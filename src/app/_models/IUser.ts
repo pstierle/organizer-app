@@ -1,6 +1,8 @@
+import { ICourse } from './ICourse';
 export interface IUser {
   id: string;
   name: string;
-  email: string;
-  university_id?: string;
+  university_id: number | null;
+  course?: ICourse;
+  course_id: number | null;
 }

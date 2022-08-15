@@ -1,9 +1,14 @@
+import { selectCoursesAsOptions } from './../../../_store/courses/courses.select';
+import { getUniversities } from './../../../_store/universities/universities.actions';
+import { nullableOptions } from './../../../_utils/select.util';
+import { selectUniversitiesAsOptions } from './../../../_store/universities/universities.select';
+import { ISelectOption } from './../../../_models/ISelectOption';
 import { Store } from '@ngrx/store';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/_services/auth.service';
-import { selectUniversities } from 'src/app/_store/universities/universities.select';
+import { getCourses } from 'src/app/_store/courses/courses.actions';
 
 @Component({
   selector: 'app-register',
@@ -11,14 +16,16 @@ import { selectUniversities } from 'src/app/_store/universities/universities.sel
   styleUrls: [],
 })
 export class RegisterPage implements OnInit, OnDestroy {
-  universitiesAsOptions: { label: string; value: any }[] = [];
-  subscription: Subscription | null = null;
+  universityOptions: ISelectOption[] = [];
+  courseOptions: ISelectOption[] = [];
+  destroy$: Subject<void> = new Subject<void>();
 
   registerForm = new FormGroup({
     email: new FormControl('', [Validators.required]),
     name: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
     university_id: new FormControl('', []),
+    course_id: new FormControl('', []),
   });
 
   emailSent = false;
@@ -26,30 +33,45 @@ export class RegisterPage implements OnInit, OnDestroy {
   constructor(private authService: AuthService, private store: Store) {}
 
   ngOnInit(): void {
-    this.subscription = this.store
-      .select(selectUniversities)
-      .subscribe((universities) => {
-        const mapped = universities.map((universitiy) => {
-          return {
-            label: universitiy.name,
-            value: universitiy.id,
-          };
-        });
-        this.universitiesAsOptions = mapped;
-        console.log(this.universitiesAsOptions);
+    this.store.dispatch(getUniversities());
+    this.store.dispatch(getCourses());
+
+    this.store
+      .select(selectUniversitiesAsOptions)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((universitiesAsOptions) => {
+        this.universityOptions = nullableOptions(universitiesAsOptions);
+      });
+
+    this.store
+      .select(selectCoursesAsOptions)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((coursesAsOptions) => {
+        this.courseOptions = nullableOptions(coursesAsOptions);
       });
   }
 
   ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.unsubscribe();
   }
 
   async onSubmit() {
+    const universityId =
+      this.registerForm.get('university_id')?.value === ''
+        ? null
+        : Number(this.registerForm.get('university_id')?.value);
+    const courseId =
+      this.registerForm.get('course_id')?.value === ''
+        ? null
+        : Number(this.registerForm.get('course_id')?.value);
+
     const error = await this.authService.signUp(
       this.registerForm.get('email')?.value ?? '',
       this.registerForm.get('password')?.value ?? '',
       this.registerForm.get('name')?.value ?? '',
-      this.registerForm.get('university_id')?.value ?? undefined
+      universityId,
+      courseId
     );
     if (!error) this.emailSent = true;
   }

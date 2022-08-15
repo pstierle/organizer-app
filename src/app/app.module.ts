@@ -1,3 +1,7 @@
+import { CourseEffects } from './_store/courses/courses.effects';
+import { coursesReducer } from './_store/courses/courses.reducer';
+import { courseAreaReducer } from './_store/course-areas/course-areas.reducer';
+import { CourseAreasEffects } from './_store/course-areas/course-areas.effects';
 import { universitiesReducer } from './_store/universities/universities.reducer';
 import { UiModule } from './components/ui-module';
 import { AuthService } from './_services/auth.service';
@@ -26,9 +30,15 @@ function initializeUser(authService: AuthService): () => any {
     UiModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    EffectsModule.forRoot([UniversitiesEffects]),
+    EffectsModule.forRoot([
+      UniversitiesEffects,
+      CourseAreasEffects,
+      CourseEffects,
+    ]),
     StoreModule.forRoot({
       universitiesState: universitiesReducer,
+      courseAreaState: courseAreaReducer,
+      courseState: coursesReducer,
     }),
   ],
   providers: [

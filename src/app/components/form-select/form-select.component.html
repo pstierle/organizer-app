@@ -6,7 +6,11 @@
     (focus)="doInput()"
     (blur)="doBlur()"
   >
-    <option *ngFor="let option of options" [value]="option.value">
+    <option
+      *ngFor="let option of options"
+      [value]="option.value"
+      [selected]="option.value === defaultValue"
+    >
       {{ option.label }}
     </option>
   </select>

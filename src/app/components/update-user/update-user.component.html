@@ -1,0 +1,22 @@
+<form
+  [formGroup]="updateForm"
+  (ngSubmit)="onSubmit()"
+  class="flex flex-col gap-5"
+>
+  <app-form-input label="Benutzername" formControlName="name"></app-form-input>
+  <app-form-select
+    label="Universität"
+    [options]="universityOptions"
+    formControlName="university_id"
+    [defaultValue]="user?.university_id"
+  ></app-form-select>
+  <app-form-select
+    label="Studiengang"
+    [options]="courseOptions"
+    formControlName="course_id"
+    [defaultValue]="user?.course_id"
+  ></app-form-select>
+  <app-button type="submit" [highlight]="true" [loading]="loading"
+    >Speichern</app-button
+  >
+</form>

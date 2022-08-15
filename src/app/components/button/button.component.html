@@ -9,5 +9,10 @@
   [disabled]="disabled"
   [type]="type"
 >
-  <ng-content></ng-content>
+  <ng-content *ngIf="!loading; else spinner"></ng-content>
+  <ng-template #spinner>
+    <div class="text-white animate-spin">
+      <fa-icon [icon]="spinnerIcon"></fa-icon>
+    </div>
+  </ng-template>
 </button>

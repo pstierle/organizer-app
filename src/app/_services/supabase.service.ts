@@ -56,9 +56,9 @@ export class BaseService<T> {
   }
 
   find(
-    filters: FindFilter[],
     select = '*',
-    range = [0, 10],
+    filters: FindFilter[] = [],
+    range = undefined,
     orders: FindOrder[] = []
   ): Observable<T[]> {
     const query = this.supabase.from(this.resource).select(select);
@@ -74,7 +74,7 @@ export class BaseService<T> {
     });
 
     // use range for pagination
-    query.range(range[0], range[1]);
+    if (range) query.range(range[0], range[1]);
 
     return from(query).pipe(map((res) => res.body as T[]));
   }

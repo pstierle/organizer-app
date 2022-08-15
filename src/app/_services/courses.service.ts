@@ -1,16 +1,16 @@
-import { IUniversity } from './../_models/IUniversity';
 import { Injectable } from '@angular/core';
+import { ICourse } from '../_models/ICourse';
 import { BaseService } from './supabase.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UniversitiesService extends BaseService<IUniversity> {
+export class CourseService extends BaseService<ICourse> {
   constructor() {
-    super('universities');
+    super('courses');
   }
 
   fetchAll() {
-    return this.find();
+    return this.find('id, name, course_area_id');
   }
 }

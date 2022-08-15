@@ -9,21 +9,35 @@
       class="flex flex-col gap-5 py-6 px-14"
       *ngIf="!emailSent; else verfifyEmail"
     >
-      <app-form-input label="E-Mail" formControlName="email"></app-form-input>
-      <app-form-input
-        label="Benutzername"
-        formControlName="name"
-      ></app-form-input>
-      <app-form-input
-        type="password"
-        label="Passwort"
-        formControlName="password"
-      ></app-form-input>
-      <app-select
-        label="Universität"
-        [options]="universitiesAsOptions"
-        formControlName="university_id"
-      ></app-select>
+      <div class="flex gap-10">
+        <div class="flex flex-col gap-5">
+          <app-form-input
+            label="E-Mail"
+            formControlName="email"
+          ></app-form-input>
+          <app-form-input
+            label="Benutzername"
+            formControlName="name"
+          ></app-form-input>
+          <app-form-input
+            type="password"
+            label="Passwort"
+            formControlName="password"
+          ></app-form-input>
+        </div>
+        <div class="flex flex-col gap-5">
+          <app-form-select
+            label="Universität"
+            [options]="universityOptions"
+            formControlName="university_id"
+          ></app-form-select>
+          <app-form-select
+            label="Studiengang"
+            [options]="courseOptions"
+            formControlName="course_id"
+          ></app-form-select>
+        </div>
+      </div>
 
       <div class="flex justify-between">
         <app-button>
@@ -34,7 +48,8 @@
     </form>
     <ng-template #verfifyEmail>
       <p class="p-10">
-        Es wurde eine Bestätigungs Email an {{registerForm.get("email")?.value}}
+        Es wurde eine Bestätigungs Email an
+        <span class="font-bold">{{registerForm.get("email")?.value}}</span>
         gesedet. Bestätige diese Email um die Registrerung abzuschließen.
       </p>
     </ng-template>

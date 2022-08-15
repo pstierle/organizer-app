@@ -6,7 +6,6 @@ import {
   createClient,
   Session,
   SupabaseClient,
-  User,
 } from '@supabase/supabase-js';
 import { environment } from 'src/environments/environment';
 import { NotificationService } from './notification.service';
@@ -41,7 +40,9 @@ export class AuthService {
     if (this.authUser) {
       const { error, data } = await this.supabase
         .from<IUser>('users')
-        .select(`name, id`)
+        .select(
+          `name, id, university_id, course_id, course:course_id(id, name, course_area:course_area_id(id, name))`
+        )
         .eq('id', this.authUser.id)
         .single();
 
@@ -79,7 +80,8 @@ export class AuthService {
     email: string,
     password: string,
     name: string,
-    university_id: string | undefined = undefined
+    university_id: number | null,
+    course_id: number | null
   ) {
     const { user, error } = await this.supabase.auth.signUp({
       email,
@@ -92,7 +94,12 @@ export class AuthService {
     if (user) {
       const { data, error } = await this.supabase
         .from<IUser>('users')
-        .insert({ id: user.id, name: name, university_id: university_id })
+        .insert({
+          id: user.id,
+          name: name,
+          university_id: university_id,
+          course_id: course_id,
+        })
         .single();
       if (error) {
         this.handleError(error.message);
@@ -117,16 +124,17 @@ export class AuthService {
     this.userSubject.next(userData);
   }
 
-  updateProfile(profile: User) {
-    const update = {
-      ...profile,
-      id: this.authUser?.id,
-      updated_at: new Date(),
-    };
+  async updateProfile(profile: IUser) {
+    const { error, data } = await this.supabase.from('users').upsert(profile);
 
-    return this.supabase.from('profiles').upsert(update, {
-      returning: 'minimal',
-    });
+    if (error) {
+      this.handleError(error.message);
+      return;
+    }
+    if (data) {
+      const userData = await this.getUser();
+      this.userSubject.next(userData);
+    }
   }
 
   handleError(message: string) {

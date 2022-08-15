@@ -5,27 +5,30 @@ import {
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
 import { Subject, Subscription, takeUntil } from 'rxjs';
+import { ISelectOption } from 'src/app/_models/ISelectOption';
 
 @Component({
-  selector: 'app-select',
-  templateUrl: './select.component.html',
+  selector: 'app-form-select',
+  templateUrl: './form-select.component.html',
   styleUrls: [],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useExisting: forwardRef(() => SelectComponent),
+      useExisting: forwardRef(() => FormSelectComponent),
     },
   ],
 })
-export class SelectComponent
+export class FormSelectComponent
   implements OnInit, ControlValueAccessor, OnDestroy
 {
   @Input() label: string = '';
 
-  @Input() options: { label: string; value: any }[] = [];
+  @Input() options: ISelectOption[] = [];
 
   @Input() input = new FormControl('');
+
+  @Input() defaultValue: any = undefined;
 
   unsubscribe$: Subject<void> = new Subject<void>();
   subscription: Subscription | null = null;
