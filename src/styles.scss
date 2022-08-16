@@ -44,3 +44,12 @@ body {
 .z-1001 {
   z-index: 1001;
 }
+
+@keyframes pulse-fast {
+  50% {
+    opacity: 0.5;
+  }
+}
+.pulse {
+  animation: pulse-fast 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}

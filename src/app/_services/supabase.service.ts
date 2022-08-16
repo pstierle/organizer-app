@@ -55,6 +55,21 @@ export class BaseService<T> {
     return from(query).pipe(map((res) => res.body as T));
   }
 
+  findByIdWithFilter(
+    id: number,
+    filters: FindFilter[],
+    select = '*'
+  ): Observable<T> {
+    const query = this.supabase
+      .from(this.resource)
+      .select(select)
+      .match({ id });
+    filters.forEach(([column, op, value]) => {
+      query.filter(column, op, value);
+    });
+    return from(query.single()).pipe(map((res) => res.body as T));
+  }
+
   find(
     select = '*',
     filters: FindFilter[] = [],

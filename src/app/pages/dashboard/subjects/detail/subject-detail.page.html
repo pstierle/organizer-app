@@ -1,1 +1,10 @@
-<p>detail</p>
+<div class="p-5">
+  <div *ngIf="subject; else noFoundTemplate" class="p-5">
+    <div>
+      <p>{{subject.name}}</p>
+    </div>
+  </div>
+  <ng-template #noFoundTemplate class="p-5">
+    <p>Kein Fach gefunden.</p>
+  </ng-template>
+</div>

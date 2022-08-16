@@ -22,4 +22,12 @@ export class SubjectService extends BaseService<ISubject> {
       ...subject,
     });
   }
+
+  fetchById(id: number) {
+    return this.findByIdWithFilter(
+      id,
+      [['user_id', 'eq', this.authService.authUser?.id]],
+      'id, name, semester'
+    );
+  }
 }

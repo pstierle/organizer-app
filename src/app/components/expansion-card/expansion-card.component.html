@@ -1,8 +1,14 @@
 <div>
   <div
-    class="flex justify-between items-center px-2 py-1 border-b border-neutral-600"
+    class="flex justify-between items-center px-2 py-1 border-b border-blue-300"
   >
-    <p class="text-sm text-zinc-200">{{ header }}</p>
+    <p
+      *ngIf="loadAnim; else headerParagraph"
+      class="h-6 pulse text-neutral-200 hover:cursor-pointer text-sm w-full px-2 py-1 rounded truncate bg-neutral-700 transition-all"
+    ></p>
+    <ng-template #headerParagraph>
+      <p class="text-sm text-zinc-200">{{ header }}</p></ng-template
+    >
     <button
       (click)="handleClick()"
       class="transition-all rounded-full hover:bg-gray-600 w-6 h-6 p-3 flex items-center justify-center"

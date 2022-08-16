@@ -8,6 +8,7 @@ import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 })
 export class ExpansionCardComponent implements OnInit {
   @Input() header!: string;
+  @Input() loadAnim: boolean = false;
   open: boolean = true;
   downIcon = faAngleDown;
 
