@@ -1,6 +1,10 @@
+import {
+  selectGroupedBySemester,
+  IGroupedBySemester,
+} from './../../_store/subjects/subjects.select';
 import { getSubjects } from './../../_store/subjects/subjects.actions';
 import { ISubject } from './../../_models/ISubject';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, Subscription, take, takeUntil } from 'rxjs';
 import { ModalService } from './../../_services/modal.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AddSubjectComponent } from '../modal/add-subject/add-subject.component';
@@ -18,10 +22,10 @@ import { Router } from '@angular/router';
   styleUrls: [],
 })
 export class SubjectsOverviewComponent implements OnInit, OnDestroy {
-  subjects$!: Observable<ISubject[]>;
+  destroy$: Subject<void> = new Subject<void>();
   isLoading$!: Observable<boolean>;
+  groupedBySemester!: IGroupedBySemester[];
   currentRoute = '';
-  subscription!: Subscription;
 
   constructor(
     private modalService: ModalService,
@@ -31,16 +35,23 @@ export class SubjectsOverviewComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.store.dispatch(getSubjects());
-    this.subjects$ = this.store.select(selectSubjects);
+    this.store
+      .select(selectGroupedBySemester)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((grouped) => {
+        this.groupedBySemester = grouped;
+        console.log(this.groupedBySemester);
+      });
     this.isLoading$ = this.store.select(isLoading);
     this.currentRoute = this.router.url;
-    this.subscription = this.router.events.subscribe((evt) => {
+    this.router.events.pipe(takeUntil(this.destroy$)).subscribe((evt) => {
       if ((evt as any).url) this.currentRoute = (evt as any).url;
     });
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.unsubscribe();
   }
 
   handleOpenAddSubjectModal() {

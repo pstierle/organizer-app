@@ -12,7 +12,7 @@ export class SubjectService extends BaseService<ISubject> {
   }
 
   fetchUserSubjects() {
-    return this.find('id, name', [
+    return this.find('id, name, semester', [
       ['user_id', 'eq', this.authService.authUser?.id],
     ]);
   }

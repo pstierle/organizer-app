@@ -1,0 +1,17 @@
+<div>
+  <div
+    class="flex justify-between items-center px-2 py-1 border-b border-neutral-600"
+  >
+    <p class="text-sm text-zinc-200">{{ header }}</p>
+    <button
+      (click)="handleClick()"
+      class="transition-all rounded-full hover:bg-gray-600 w-6 h-6 p-3 flex items-center justify-center"
+      [ngClass]="open ? '' : 'rotate-90'"
+    >
+      <fa-icon [icon]="downIcon"></fa-icon>
+    </button>
+  </div>
+  <div class="p-2">
+    <ng-content *ngIf="open"></ng-content>
+  </div>
+</div>

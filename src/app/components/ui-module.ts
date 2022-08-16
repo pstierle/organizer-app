@@ -1,3 +1,4 @@
+import { ExpansionCardComponent } from './expansion-card/expansion-card.component';
 import { SpinnerIconComponent } from './icons/spinner-icon/spinner-icon.component';
 import { RouterModule } from '@angular/router';
 import { AddSubjectComponent } from './modal/add-subject/add-subject.component';
@@ -37,6 +38,7 @@ import { UpdateProfileImageComponent } from './update-profile-image/update-profi
     SubjectsOverviewComponent,
     AddSubjectComponent,
     SpinnerIconComponent,
+    ExpansionCardComponent,
   ],
   exports: [
     ButtonComponent,
@@ -51,6 +53,7 @@ import { UpdateProfileImageComponent } from './update-profile-image/update-profi
     SubjectsOverviewComponent,
     AddSubjectComponent,
     SpinnerIconComponent,
+    ExpansionCardComponent,
   ],
   providers: [AddSubjectComponent],
 })
