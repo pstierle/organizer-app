@@ -1,3 +1,4 @@
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CommonModule } from '@angular/common';
 import { SubjectDetailRoutingModule } from './subject-detail-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -13,6 +14,7 @@ import { SubjectDetailPage } from './subject-detail.page';
     ReactiveFormsModule,
     UiModule,
     SubjectDetailRoutingModule,
+    FontAwesomeModule,
   ],
   providers: [],
 })

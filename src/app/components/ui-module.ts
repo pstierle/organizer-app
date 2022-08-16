@@ -1,3 +1,5 @@
+import { DeleteSubjectComponent } from './modal/delete-subject/delete-subject.component';
+import { InputComponent } from './input/input.component';
 import { ExpansionCardComponent } from './expansion-card/expansion-card.component';
 import { SpinnerIconComponent } from './icons/spinner-icon/spinner-icon.component';
 import { RouterModule } from '@angular/router';
@@ -39,6 +41,8 @@ import { UpdateProfileImageComponent } from './update-profile-image/update-profi
     AddSubjectComponent,
     SpinnerIconComponent,
     ExpansionCardComponent,
+    InputComponent,
+    DeleteSubjectComponent,
   ],
   exports: [
     ButtonComponent,
@@ -54,6 +58,8 @@ import { UpdateProfileImageComponent } from './update-profile-image/update-profi
     AddSubjectComponent,
     SpinnerIconComponent,
     ExpansionCardComponent,
+    InputComponent,
+    DeleteSubjectComponent,
   ],
   providers: [AddSubjectComponent],
 })

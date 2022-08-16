@@ -1,0 +1,15 @@
+<div
+  class="bg-neutral-700 py-1 px-2 rounded flex justify-between items-center transition-all"
+  [ngClass]="focused ? 'ring-[1px] ring-blue-200' : isLoading ? 'pulse' : ''"
+>
+  <input
+    class="outline-none border-none bg-transparent truncate text-neutral-200"
+    [(ngModel)]="model"
+    (ngModelChange)="modelChange.emit(model)"
+    [type]="type"
+    (focus)="doFocus()"
+    (blur)="doBlur()"
+    [ngClass]="isLoading ? 'text-transparent' : ''"
+  />
+  <ng-content></ng-content>
+</div>

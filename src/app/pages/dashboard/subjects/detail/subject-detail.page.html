@@ -1,10 +1,14 @@
-<div class="p-5">
-  <div *ngIf="subject; else noFoundTemplate" class="p-5">
-    <div>
-      <p>{{subject.name}}</p>
+<div class="p-5 w-full">
+  <div>
+    <div class="flex justify-between">
+      <app-input
+        [(model)]="nameModel"
+        (blur)="handleBlur()"
+        [isLoading]="!subject"
+      >
+        <fa-icon [icon]="pencilIcon"></fa-icon>
+      </app-input>
+      <app-button (click)="handleDelete()">Fach löschen</app-button>
     </div>
   </div>
-  <ng-template #noFoundTemplate class="p-5">
-    <p>Kein Fach gefunden.</p>
-  </ng-template>
 </div>

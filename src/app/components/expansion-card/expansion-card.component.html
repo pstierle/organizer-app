@@ -4,8 +4,10 @@
   >
     <p
       *ngIf="loadAnim; else headerParagraph"
-      class="h-6 pulse text-neutral-200 hover:cursor-pointer text-sm w-full px-2 py-1 rounded truncate bg-neutral-700 transition-all"
-    ></p>
+      class="h-6 pulse text-neutral-200 hover:cursor-pointer text-sm w-full px-2 py-1 rounded truncate bg-neutral-700 transition-all text-transparent"
+    >
+      Placeholder
+    </p>
     <ng-template #headerParagraph>
       <p class="text-sm text-zinc-200">{{ header }}</p></ng-template
     >

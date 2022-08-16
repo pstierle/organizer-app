@@ -23,11 +23,19 @@ export class SubjectService extends BaseService<ISubject> {
     });
   }
 
-  fetchById(id: number) {
+  fetchSubjectById(id: number) {
     return this.findByIdWithFilter(
       id,
       [['user_id', 'eq', this.authService.authUser?.id]],
       'id, name, semester'
     );
+  }
+
+  updateSubject(id: string, data: ISubject) {
+    return this.update(id, data);
+  }
+
+  deleteSubject(id: string) {
+    return this.delete(id);
   }
 }

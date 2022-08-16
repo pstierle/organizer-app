@@ -1,16 +1,22 @@
 <button
   class="text-neutral-200 py-1 px-2 rounded text-sm border border-gray-600 transition-colors disabled:cursor-not-allowed disabled:opacity-70"
-  [class]="
-    highlight
+  [ngClass]="
+    isPrimary
       ? 'bg-blue-400 hover:bg-blue-300'
+      : isDanger
+      ? 'bg-neutral-700 border border-red-400 hover:bg-red-600 text-red-400 hover:text-neutral-200'
+      : isWarning
+      ? 'bg-neutral-700 border border-yellow-400 hover:bg-yellow-600 text-yellow-400 hover:text-neutral-200'
+      : isSuccess
+      ? 'bg-green-400 hover:bg-green-300'
       : 'bg-neutral-700 hover:bg-neutral-600 hover:border-blue-300'
   "
   (click)="(handleClick)"
   [disabled]="disabled"
   [type]="type"
 >
-  <ng-content *ngIf="!loading; else spinner"></ng-content>
-  <ng-template #spinner>
+  <ng-content></ng-content>
+  <ng-template *ngIf="loading">
     <app-spinner-icon></app-spinner-icon>
   </ng-template>
 </button>

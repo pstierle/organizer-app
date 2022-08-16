@@ -4,7 +4,12 @@ import {
   PortalInjector,
   ComponentType,
 } from '@angular/cdk/portal';
-import { ComponentRef, Injectable, Injector } from '@angular/core';
+import {
+  ComponentRef,
+  Injectable,
+  InjectionToken,
+  Injector,
+} from '@angular/core';
 
 export class FormModalOverlayRef {
   constructor(private overlayRef: OverlayRef) {
@@ -18,16 +23,22 @@ export class FormModalOverlayRef {
   }
 }
 
-interface FormModalConfig {
+export const MODAL_DATA = new InjectionToken<any>('MODAL_DATA');
+
+interface FormModalConfig<D> {
   panelClass?: string;
   hasBackdrop?: boolean;
   backdropClass?: string;
+  position?: 'center' | 'right';
+  data?: D;
 }
 
-const DEFAULT_CONFIG: FormModalConfig = {
+const DEFAULT_CONFIG: FormModalConfig<any> = {
   hasBackdrop: true,
   backdropClass: 'modal-backdrop',
   panelClass: 'min-h-full',
+  position: 'right',
+  data: undefined,
 };
 
 @Injectable()
@@ -35,12 +46,12 @@ export class ModalService {
   public dialogRef!: FormModalOverlayRef;
   constructor(private injector: Injector, private overlay: Overlay) {}
 
-  open<T>(component: ComponentType<T>, config: FormModalConfig = {}) {
+  open<T, D>(component: ComponentType<T>, config: FormModalConfig<D> = {}) {
     const modalConfig = { ...DEFAULT_CONFIG, ...config };
-    const overlayRef = this.createOverlay(modalConfig);
+    const overlayRef = this.createOverlay<D>(modalConfig);
     const dialogRef = new FormModalOverlayRef(overlayRef);
 
-    const overlayComponent = this.attachModalContainer<T>(
+    const overlayComponent = this.attachModalContainer<T, D>(
       overlayRef,
       modalConfig,
       dialogRef,
@@ -52,32 +63,40 @@ export class ModalService {
   }
 
   // tslint:disable-next-line:max-line-length
-  private attachModalContainer<T>(
+  private attachModalContainer<T, D>(
     overlayRef: OverlayRef,
-    config: FormModalConfig,
+    config: FormModalConfig<D>,
     dialogRef: FormModalOverlayRef,
     component: ComponentType<T>
   ) {
-    const injector = this.createInjector(config, dialogRef);
+    const injector = this.createInjector<D>(config, dialogRef);
 
     const containerPortal = new ComponentPortal(component, null, injector);
     const containerRef: ComponentRef<T> = overlayRef.attach(containerPortal);
     return containerRef.instance;
   }
 
-  private createInjector(
-    config: FormModalConfig,
+  private createInjector<D>(
+    config: FormModalConfig<D>,
     dialogRef: FormModalOverlayRef
   ) {
     const injectionTokens = new WeakMap();
 
     injectionTokens.set(FormModalOverlayRef, dialogRef);
+    injectionTokens.set(MODAL_DATA, config.data);
 
     return new PortalInjector(this.injector, injectionTokens);
   }
 
-  private getOverlayConfig(config: FormModalConfig): OverlayConfig {
-    const positionStrategy = this.overlay.position().global().end();
+  private getOverlayConfig<D>(config: FormModalConfig<D>): OverlayConfig {
+    const positionStrategy =
+      config.position === 'right'
+        ? this.overlay.position().global().end()
+        : this.overlay
+            .position()
+            .global()
+            .centerHorizontally()
+            .centerVertically();
 
     const overlayConfig = new OverlayConfig({
       hasBackdrop: config.hasBackdrop,
@@ -90,9 +109,9 @@ export class ModalService {
     return overlayConfig;
   }
 
-  private createOverlay(config: FormModalConfig) {
+  private createOverlay<D>(config: FormModalConfig<D>) {
     // Returns an OverlayConfig
-    const overlayConfig = this.getOverlayConfig(config);
+    const overlayConfig = this.getOverlayConfig<D>(config);
 
     // Returns an OverlayRef
     return this.overlay.create(overlayConfig);

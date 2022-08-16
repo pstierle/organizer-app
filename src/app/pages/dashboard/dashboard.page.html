@@ -8,10 +8,13 @@
       [label]="navItem.label"
       [highlight]="currentRoute.includes(navItem.route)"
     >
-      <fa-icon [icon]="navItem.icon"></fa-icon>
+      <fa-icon
+        [icon]="navItem.icon"
+        [ngClass]="currentRoute.includes(navItem.route) ? 'text-neutral-200' : ''"
+      ></fa-icon>
     </app-dashboard-nav-item>
   </div>
-  <div>
-    <router-outlet></router-outlet>
+  <div class="">
+    <router-outlet class=""></router-outlet>
   </div>
 </div>

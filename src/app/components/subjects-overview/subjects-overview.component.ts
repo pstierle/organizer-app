@@ -49,6 +49,6 @@ export class SubjectsOverviewComponent
   }
 
   handleOpenAddSubjectModal() {
-    this.modalService.open<AddSubjectComponent>(AddSubjectComponent);
+    this.modalService.open<AddSubjectComponent, any>(AddSubjectComponent);
   }
 }

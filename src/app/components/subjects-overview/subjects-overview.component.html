@@ -7,44 +7,56 @@
   <app-expansion-card
     [loadAnim]="true"
     class="w-full px-5"
-    *ngIf="isLoading$ | async"
+    *ngIf="isLoading$ | async; else subjectOverview"
   >
     <div class="flex flex-col gap-2">
       <p
-        class="h-6 pulse text-neutral-200 hover:cursor-pointer text-sm w-full px-2 py-1 rounded truncate bg-neutral-700 transition-all ml-3"
-      ></p>
-      <p
-        class="h-6 pulse text-neutral-200 hover:cursor-pointer text-sm w-full px-2 py-1 rounded truncate bg-neutral-700 transition-all ml-3"
-      ></p>
-      <p
-        class="h-6 pulse text-neutral-200 hover:cursor-pointer text-sm w-full px-2 py-1 rounded truncate bg-neutral-700 transition-all ml-3"
-      ></p>
-      <p
-        class="h-6 pulse text-neutral-200 hover:cursor-pointer text-sm w-full px-2 py-1 rounded truncate bg-neutral-700 transition-all ml-3"
-      ></p>
-      <p
-        class="h-6 pulse text-neutral-200 hover:cursor-pointer text-sm w-full px-2 py-1 rounded truncate bg-neutral-700 transition-all ml-3"
-      ></p>
-    </div>
-  </app-expansion-card>
-  <app-expansion-card
-    [header]="'Semester' + group.semester"
-    *ngFor="let group of groupedBySemester"
-    class="w-full my-2 px-5"
-  >
-    <div class="flex flex-col gap-2">
-      <a
-        *ngFor="let subject of group.subjects"
-        class="hover:text-neutral-200 hover:cursor-pointer text-sm w-full px-2 py-1 rounded truncate hover:bg-neutral-700 transition-all ml-3"
-        [ngClass]="
-          currentRoute === '/dashboard/subjects/detail/' + subject.id
-            ? 'text-neutral-200 bg-neutral-700'
-            : ''
-        "
-        [routerLink]="'/dashboard/subjects/detail/' + subject.id"
+        class="pulse text-transparent text-neutral-200 hover:cursor-pointer text-sm w-full px-2 py-1 rounded truncate bg-neutral-700 transition-all ml-3"
       >
-        {{ subject.name }}
-      </a>
+        Placeholder
+      </p>
+      <p
+        class="pulse text-transparent text-neutral-200 hover:cursor-pointer text-sm w-full px-2 py-1 rounded truncate bg-neutral-700 transition-all ml-3"
+      >
+        Placeholder
+      </p>
+      <p
+        class="pulse text-transparent text-neutral-200 hover:cursor-pointer text-sm w-full px-2 py-1 rounded truncate bg-neutral-700 transition-all ml-3"
+      >
+        Placeholder
+      </p>
+      <p
+        class="pulse text-transparent text-neutral-200 hover:cursor-pointer text-sm w-full px-2 py-1 rounded truncate bg-neutral-700 transition-all ml-3"
+      >
+        Placeholder
+      </p>
+      <p
+        class="pulse text-transparent text-neutral-200 hover:cursor-pointer text-sm w-full px-2 py-1 rounded truncate bg-neutral-700 transition-all ml-3"
+      >
+        Placeholder
+      </p>
     </div>
   </app-expansion-card>
+  <ng-template #subjectOverview>
+    <app-expansion-card
+      [header]="'Semester' + group.semester"
+      *ngFor="let group of groupedBySemester"
+      class="w-full my-2 px-5"
+    >
+      <div class="flex flex-col gap-2">
+        <a
+          *ngFor="let subject of group.subjects"
+          class="hover:text-neutral-200 hover:cursor-pointer text-sm w-full px-2 py-1 rounded truncate hover:bg-neutral-700 transition-all ml-3"
+          [ngClass]="
+            currentRoute === '/dashboard/subjects/detail/' + subject.id
+              ? 'text-neutral-200 bg-neutral-700'
+              : ''
+          "
+          [routerLink]="'/dashboard/subjects/detail/' + subject.id"
+        >
+          {{ subject.name }}
+        </a>
+      </div>
+    </app-expansion-card>
+  </ng-template>
 </div>

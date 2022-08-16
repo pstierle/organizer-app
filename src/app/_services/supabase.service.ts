@@ -117,7 +117,7 @@ export class BaseService<T> {
     return from(query).pipe(map((res) => res.body as T[]));
   }
 
-  delete(id: number): Observable<T> {
+  delete(id: string): Observable<T> {
     const query = this.supabase
       .from(this.resource)
       .delete()
@@ -135,7 +135,7 @@ export class BaseService<T> {
     return from(query).pipe(map((res) => res.body as T[]));
   }
 
-  update(id: number, data: Partial<T>): Observable<T> {
+  update(id: string, data: Partial<T>): Observable<T> {
     const query = this.supabase
       .from(this.resource)
       .update({ ...data })
