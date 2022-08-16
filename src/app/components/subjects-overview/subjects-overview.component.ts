@@ -1,19 +1,15 @@
+import { BaseComponent } from './../../_utils/base.component';
 import {
   selectGroupedBySemester,
   IGroupedBySemester,
 } from './../../_store/subjects/subjects.select';
 import { getSubjects } from './../../_store/subjects/subjects.actions';
-import { ISubject } from './../../_models/ISubject';
-import { Observable, Subject, Subscription, take, takeUntil } from 'rxjs';
+import { Observable, takeUntil } from 'rxjs';
 import { ModalService } from './../../_services/modal.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AddSubjectComponent } from '../modal/add-subject/add-subject.component';
 import { Store } from '@ngrx/store';
-import {
-  isLoading,
-  selectCurrent,
-  selectSubjects,
-} from 'src/app/_store/subjects/subjects.select';
+import { isLoading } from 'src/app/_store/subjects/subjects.select';
 import { Router } from '@angular/router';
 
 @Component({
@@ -21,8 +17,10 @@ import { Router } from '@angular/router';
   templateUrl: './subjects-overview.component.html',
   styleUrls: [],
 })
-export class SubjectsOverviewComponent implements OnInit, OnDestroy {
-  destroy$: Subject<void> = new Subject<void>();
+export class SubjectsOverviewComponent
+  extends BaseComponent
+  implements OnInit, OnDestroy
+{
   isLoading$!: Observable<boolean>;
   groupedBySemester!: IGroupedBySemester[];
   currentRoute = '';
@@ -31,7 +29,9 @@ export class SubjectsOverviewComponent implements OnInit, OnDestroy {
     private modalService: ModalService,
     private store: Store,
     private router: Router
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.store.dispatch(getSubjects());
@@ -40,18 +40,12 @@ export class SubjectsOverviewComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((grouped) => {
         this.groupedBySemester = grouped;
-        console.log(this.groupedBySemester);
       });
     this.isLoading$ = this.store.select(isLoading);
     this.currentRoute = this.router.url;
     this.router.events.pipe(takeUntil(this.destroy$)).subscribe((evt) => {
       if ((evt as any).url) this.currentRoute = (evt as any).url;
     });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.unsubscribe();
   }
 
   handleOpenAddSubjectModal() {

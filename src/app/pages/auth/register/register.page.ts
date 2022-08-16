@@ -1,3 +1,4 @@
+import { BaseComponent } from './../../../_utils/base.component';
 import { selectCoursesAsOptions } from './../../../_store/courses/courses.select';
 import { getUniversities } from './../../../_store/universities/universities.actions';
 import { nullableOptions } from './../../../_utils/select.util';
@@ -15,10 +16,9 @@ import { getCourses } from 'src/app/_store/courses/courses.actions';
   templateUrl: './register.page.html',
   styleUrls: [],
 })
-export class RegisterPage implements OnInit, OnDestroy {
+export class RegisterPage extends BaseComponent implements OnInit, OnDestroy {
   universityOptions: ISelectOption[] = [];
   courseOptions: ISelectOption[] = [];
-  destroy$: Subject<void> = new Subject<void>();
 
   registerForm = new FormGroup({
     email: new FormControl('', [Validators.required]),
@@ -30,7 +30,9 @@ export class RegisterPage implements OnInit, OnDestroy {
 
   emailSent = false;
 
-  constructor(private authService: AuthService, private store: Store) {}
+  constructor(private authService: AuthService, private store: Store) {
+    super();
+  }
 
   ngOnInit(): void {
     this.store.dispatch(getUniversities());
@@ -49,11 +51,6 @@ export class RegisterPage implements OnInit, OnDestroy {
       .subscribe((coursesAsOptions) => {
         this.courseOptions = nullableOptions(coursesAsOptions);
       });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.unsubscribe();
   }
 
   async onSubmit() {

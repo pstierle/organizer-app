@@ -1,3 +1,4 @@
+import { BaseComponent } from './../../_utils/base.component';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/_services/auth.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -8,15 +9,19 @@ import { DomSanitizer } from '@angular/platform-browser';
   templateUrl: './profile-image.component.html',
   styleUrls: [],
 })
-export class ProfileImageComponent implements OnInit, OnDestroy {
+export class ProfileImageComponent
+  extends BaseComponent
+  implements OnInit, OnDestroy
+{
   subscription: Subscription | null = null;
   profileImage: any = null;
-  destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private authService: AuthService,
     private sanitizer: DomSanitizer
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.authService
@@ -30,11 +35,6 @@ export class ProfileImageComponent implements OnInit, OnDestroy {
           this.profileImage = this.sanitizer.bypassSecurityTrustUrl(url);
         }
       });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.unsubscribe();
   }
 
   get userInitials() {

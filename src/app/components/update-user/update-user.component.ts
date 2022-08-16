@@ -1,3 +1,4 @@
+import { BaseComponent } from './../../_utils/base.component';
 import { selectCoursesAsOptions } from './../../_store/courses/courses.select';
 import { ISelectOption } from './../../_models/ISelectOption';
 import { selectUniversitiesAsOptions } from './../../_store/universities/universities.select';
@@ -16,8 +17,10 @@ import { getUniversities } from 'src/app/_store/universities/universities.action
   templateUrl: './update-user.component.html',
   styleUrls: [],
 })
-export class UpdateUserComponent implements OnInit, OnDestroy {
-  destroy$: Subject<void> = new Subject<void>();
+export class UpdateUserComponent
+  extends BaseComponent
+  implements OnInit, OnDestroy
+{
   user: IUser | null = null;
   loading = false;
   universityOptions: ISelectOption[] = [];
@@ -48,7 +51,9 @@ export class UpdateUserComponent implements OnInit, OnDestroy {
     this.loading = false;
   }
 
-  constructor(private authService: AuthService, private store: Store) {}
+  constructor(private authService: AuthService, private store: Store) {
+    super();
+  }
 
   ngOnInit(): void {
     this.store.dispatch(getUniversities());
@@ -85,10 +90,5 @@ export class UpdateUserComponent implements OnInit, OnDestroy {
             );
         }
       });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.unsubscribe();
   }
 }
