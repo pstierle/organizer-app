@@ -36,15 +36,17 @@ export class SubjectDetailPage
   }
 
   ngOnInit(): void {
+    console.log('init');
     this.route.paramMap
       .pipe(
-        delay(500),
         takeUntil(this.destroy$),
         switchMap((paramMap: any, index: number) => {
+          this.subject = undefined;
           const id = paramMap.get('id');
           if (!id) return new Observable();
           return this.subjectService.fetchSubjectById(id);
-        })
+        }),
+        delay(500)
       )
       .subscribe((subject) => {
         this.subject = subject as ISubject;

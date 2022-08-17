@@ -4,5 +4,5 @@ export interface ISubject {
   name: string;
   semester: number;
   user_id: string;
-  excerciseSheets: IExerciseSheet[];
+  excercise_sheets: IExerciseSheet[];
 }

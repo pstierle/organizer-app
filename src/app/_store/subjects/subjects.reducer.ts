@@ -62,7 +62,7 @@ export const subjectsReducer = createReducer(
     let subject = updated.find((s) => s.id === excerciseSheet.subject_id);
     const index = updated.findIndex((s) => s.id === excerciseSheet.subject_id);
     if (subject) {
-      (subject as ISubject).excerciseSheets.push(excerciseSheet);
+      (subject as ISubject).excercise_sheets.push(excerciseSheet);
       updated[index] = subject;
     }
     return {
@@ -77,9 +77,9 @@ export const subjectsReducer = createReducer(
     let subject = updated.find((s) => s.id === subjectId);
     const index = updated.findIndex((s) => s.id === subjectId);
     if (subject) {
-      (subject as ISubject).excerciseSheets = (
+      (subject as ISubject).excercise_sheets = (
         subject as ISubject
-      ).excerciseSheets.filter((sheet) => sheet.id !== id);
+      ).excercise_sheets.filter((sheet) => sheet.id !== id);
       updated[index] = subject;
     }
     return {
@@ -94,10 +94,10 @@ export const subjectsReducer = createReducer(
     let subject = updated.find((s) => s.id === excerciseSheet.subject_id);
     const index = updated.findIndex((s) => s.id === excerciseSheet.subject_id);
     if (subject) {
-      const sheetIndex = (subject as ISubject).excerciseSheets.findIndex(
+      const sheetIndex = (subject as ISubject).excercise_sheets.findIndex(
         (s) => s.id === excerciseSheet.id
       );
-      (subject as ISubject).excerciseSheets[sheetIndex] = excerciseSheet;
+      (subject as ISubject).excercise_sheets[sheetIndex] = excerciseSheet;
       updated[index] = subject;
     }
     return {

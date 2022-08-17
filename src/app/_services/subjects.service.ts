@@ -27,7 +27,7 @@ export class SubjectService extends BaseService<ISubject> {
     return this.findByIdWithFilter(
       id,
       [['user_id', 'eq', this.authService.authUser?.id]],
-      'id, name, semester'
+      'id, name, semester, excercise_sheets(id, number)'
     );
   }
 

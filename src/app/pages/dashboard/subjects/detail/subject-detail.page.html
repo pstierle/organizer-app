@@ -4,11 +4,13 @@
       <app-input
         [(model)]="nameModel"
         (blur)="handleBlur()"
-        [isLoading]="!subject"
+        [loadAnimation]="!subject"
       >
         <fa-icon [icon]="pencilIcon"></fa-icon>
       </app-input>
-      <app-button (click)="handleDelete()">Fach löschen</app-button>
+      <app-button (click)="handleDelete()" [loadAnimation]="!subject"
+        >Fach löschen</app-button
+      >
     </div>
   </div>
 </div>

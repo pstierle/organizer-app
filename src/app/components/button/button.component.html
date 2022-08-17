@@ -9,13 +9,18 @@
       ? 'bg-neutral-700 border border-yellow-400 hover:bg-yellow-600 text-yellow-400 hover:text-neutral-200'
       : isSuccess
       ? 'bg-green-400 hover:bg-green-300'
+      : loadAnimation
+      ? 'pulse bg-neutral-700'
       : 'bg-neutral-700 hover:bg-neutral-600 hover:border-blue-300'
   "
   (click)="(handleClick)"
   [disabled]="disabled"
   [type]="type"
 >
-  <ng-content></ng-content>
+  <ng-content *ngIf="!loadAnimation; else emptyText"></ng-content>
+  <ng-template #emptyText>
+    <p class="text-transparent">Placeholder</p>
+  </ng-template>
   <ng-template *ngIf="loading">
     <app-spinner-icon></app-spinner-icon>
   </ng-template>

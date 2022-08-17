@@ -21,7 +21,7 @@ export class SubjectsOverviewComponent
   extends BaseComponent
   implements OnInit, OnDestroy
 {
-  isLoading$!: Observable<boolean>;
+  showLoadAnim = false;
   groupedBySemester!: IGroupedBySemester[];
   currentRoute = '';
 
@@ -41,7 +41,10 @@ export class SubjectsOverviewComponent
       .subscribe((grouped) => {
         this.groupedBySemester = grouped;
       });
-    this.isLoading$ = this.store.select(isLoading);
+    this.store
+      .select(isLoading)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((isLoading) => (this.showLoadAnim = isLoading));
     this.currentRoute = this.router.url;
     this.router.events.pipe(takeUntil(this.destroy$)).subscribe((evt) => {
       if ((evt as any).url) this.currentRoute = (evt as any).url;

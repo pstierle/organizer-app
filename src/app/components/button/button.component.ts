@@ -9,6 +9,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 export class ButtonComponent {
   @Output() click = new EventEmitter<void>();
   @Input() loading: boolean = false;
+  @Input() loadAnimation: boolean = false;
   @Input() disabled: boolean = false;
   @Input() style: 'danger' | 'success' | 'primary' | 'warning' | '' = '';
   @Input() type: string = 'button';
