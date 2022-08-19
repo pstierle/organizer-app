@@ -1,0 +1,27 @@
+<div class="relative" appClickOutside (clickOutside)="handleClickoutside()">
+  <app-input
+    placeholder="Fach suchen.."
+    [(model)]="queryValue"
+    (modelChange)="handleChange($event)"
+    (focus)="handleFocus()"
+  >
+    <fa-icon [icon]="searchIcon"></fa-icon>
+  </app-input>
+  <div
+    class="absolute z-50 bg-neutral-800 border border-blue-300 p-2 rounded mt-2 min-w-full shadow-lg"
+    *ngIf="showResults"
+  >
+    <div *ngIf="results.length > 0; else noResults" class="flex flex-col gap-2">
+      <a
+        *ngFor="let subject of results"
+        class="hover:text-neutral-200 hover:cursor-pointer text-sm px-2 py-1 rounded truncate hover:bg-neutral-700 transition-all"
+        [routerLink]="'/dashboard/subjects/detail/' + subject.id"
+      >
+        {{ subject.name }}
+      </a>
+    </div>
+    <ng-template #noResults>
+      <p class="text-neutral-200 text-xs">Keine Ergebinsse gefunden</p>
+    </ng-template>
+  </div>
+</div>

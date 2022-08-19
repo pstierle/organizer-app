@@ -1,19 +1,19 @@
 <div
-  class="border-b border-b-gray-600 py-4 px-3 flex justify-between items-center"
+  class="border-b border-b-gray-600 py-4 px-5 flex justify-between items-center"
 >
-  <div class="flex items-center gap-1">
-    <a routerLink="/dashboard">
-      <fa-icon [icon]="faGraduationCap" size="2x"></fa-icon>
-    </a>
-    <p>Organizer</p>
-  </div>
-  <div class="flex gap-3 items-center" *ngIf="user">
-    <app-profile-image class="w-10 h-10"></app-profile-image>
-    <app-button (click)="handleLogout()">
-      <div class="flex gap-2 items-center">
-        <fa-icon [icon]="faArrowRightFromBracket"></fa-icon>
-        <p class="text-sm">Logout</p>
-      </div>
-    </app-button>
+  <a routerLink="/dashboard">
+    <fa-icon [icon]="logo" size="2x" class="text-blue-400"></fa-icon>
+  </a>
+  <div class="flex items-center justify-between w-1/2" *ngIf="user">
+    <app-searchbar></app-searchbar>
+    <div class="flex items-center gap-3">
+      <app-profile-image class="w-10 h-10"></app-profile-image>
+      <app-button (click)="handleLogout()">
+        <div class="flex gap-2 items-center">
+          <fa-icon [icon]="faArrowRightFromBracket"></fa-icon>
+          <p class="text-sm">Logout</p>
+        </div>
+      </app-button>
+    </div>
   </div>
 </div>

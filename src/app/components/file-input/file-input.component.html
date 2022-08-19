@@ -1,15 +1,18 @@
 <div class="flex gap-2 items-center">
-  <label
-    for="file"
-    class="px-2 py-1 rounded text-neutral-200 text-sm bg-neutral-700 hover:bg-neutral-600 hover:border-blue-300 transition-colors border border-gray-600 hover:cursor-pointer"
-  >
-    Datei Auswählen
+  <label for="file">
+    <ng-content [select]="label"></ng-content>
   </label>
   <p
     class="text-sm px-2 py-1 bg-neutral-700 rounded border border-gray-600"
-    *ngIf="fileName"
+    *ngIf="fileName && showFileName"
   >
     {{ fileName }}
   </p>
-  <input type="file" id="file" (change)="handleChange($event)" class="hidden" />
+  <input
+    type="file"
+    [accept]="accept"
+    id="file"
+    (change)="handleChange($event)"
+    class="hidden"
+  />
 </div>

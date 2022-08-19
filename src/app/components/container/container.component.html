@@ -1,5 +1,14 @@
-<div class="rounded ring-[1.8px] ring-blue-400">
-  <div *ngIf="header" class="py-3 px-7 text-neutral-200">
+<div
+  class="rounded ring-[1.8px] ring-blue-400"
+  [ngClass]="loadAnimation ? 'pulse' : ''"
+>
+  <div *ngIf="header && !loadAnimation" class="py-3 px-7 text-neutral-200">
+    {{ header }}
+  </div>
+  <div
+    *ngIf="header && loadAnimation"
+    class="py-3 px-7 text-transparent bg-gray-700 rounded pulse"
+  >
     {{ header }}
   </div>
   <div class="p-7">

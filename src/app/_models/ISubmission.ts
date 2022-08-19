@@ -1,9 +1,9 @@
-export type SubmisstionType = 'Abgabe' | 'Korrektur' | 'Lösung';
+export type SubmissionType = 'Abgabe' | 'Korrektur' | 'Lösung';
 
-export interface ISubmussion {
+export interface ISubmission {
   id: string;
-  type: SubmisstionType;
+  type: SubmissionType;
   fileType: string;
   user_id: string;
-  exerciseSheet_id: string;
+  exercise_sheet_id: string;
 }

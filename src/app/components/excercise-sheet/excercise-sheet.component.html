@@ -1,0 +1,38 @@
+<app-container [header]="'Blatt - ' + sheet.number">
+  <div class="w-40 h-56 flex flex-col justify-between">
+    <div class="flex flex-col gap-4">
+      <div
+        class="flex justify-between items-center"
+        *ngFor="let type of submisstionTypes"
+      >
+        <p>{{ type }} - {{ countByType[type] }}</p>
+        <div class="flex items-center gap-2">
+          <button
+            *ngIf="countByType[type] > 0"
+            (click)="handleOpenSubmission(type)"
+          >
+            <fa-icon [icon]="showIcon" class="hover:text-neutral-200"></fa-icon>
+          </button>
+          <app-file-input
+            accept=".jpg ,.jpeg ,.png"
+            [showFileName]="false"
+            (fileChange)="handleUploadFileChange($event, type)"
+          >
+            <fa-icon
+              [icon]="uploadIcon"
+              class="hover:text-neutral-200 hover:cursor-pointer"
+              label
+            ></fa-icon>
+          </app-file-input>
+        </div>
+      </div>
+    </div>
+
+    <app-button (click)="handleDelete()" [style]="'danger'">
+      <div class="flex items-center gap-3">
+        <p>Löschen</p>
+        <fa-icon [icon]="trashIcon"></fa-icon>
+      </div>
+    </app-button>
+  </div>
+</app-container>

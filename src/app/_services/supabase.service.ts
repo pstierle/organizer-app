@@ -35,7 +35,7 @@ export type FindFilter = [
 export type FindOrder = [column: string, ascending?: boolean];
 
 export class BaseService<T> {
-  private supabase: SupabaseClient;
+  protected supabase: SupabaseClient;
   protected resource: string;
 
   constructor(resource: string) {
@@ -73,7 +73,7 @@ export class BaseService<T> {
   find(
     select = '*',
     filters: FindFilter[] = [],
-    range = undefined,
+    range: number[] | undefined = undefined,
     orders: FindOrder[] = []
   ): Observable<T[]> {
     const query = this.supabase.from(this.resource).select(select);
@@ -110,6 +110,15 @@ export class BaseService<T> {
       .insert({ ...model })
       .single();
     return from(query).pipe(map((res) => res.body as T));
+  }
+
+  async createRaw(model: Partial<T>): Promise<T> {
+    const { data, error } = await this.supabase
+      .from(this.resource)
+      .insert({ ...model })
+      .single();
+
+    return data as T;
   }
 
   createMany(models: Partial<T>[]): Observable<T[]> {

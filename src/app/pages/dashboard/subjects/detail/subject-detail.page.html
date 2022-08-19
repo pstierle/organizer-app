@@ -1,16 +1,48 @@
-<div class="p-5 w-full">
-  <div>
+<div class="p-5 fill-height overflow-y-auto">
+  <div class="flex flex-col gap-5">
     <div class="flex justify-between">
-      <app-input
-        [(model)]="nameModel"
-        (blur)="handleBlur()"
+      <div class="flex gap-2 items-center">
+        <app-input
+          [(model)]="nameModel"
+          (blur)="handleBlur()"
+          [loadAnimation]="!subject"
+        >
+          <fa-icon [icon]="pencilIcon"></fa-icon>
+        </app-input>
+        <app-add-excercise-sheet
+          (add)="handleAddExcerciseSheet($event)"
+          [loadAnim]="!subject"
+        ></app-add-excercise-sheet>
+      </div>
+
+      <app-button
+        (click)="handleOpenDeleteSubjectModal()"
         [loadAnimation]="!subject"
-      >
-        <fa-icon [icon]="pencilIcon"></fa-icon>
-      </app-input>
-      <app-button (click)="handleDelete()" [loadAnimation]="!subject"
+        [disabled]="!subject"
         >Fach löschen</app-button
       >
     </div>
+    <div
+      *ngIf="subject; else sheetAnim"
+      class="flex flex-wrap gap-5 justify-start"
+    >
+      <app-excercise-sheet
+        *ngFor="let sheet of subject.excercise_sheets"
+        [sheet]="sheet"
+        (removeSheet)="handleDeleteSheet($event)"
+      >
+      </app-excercise-sheet>
+    </div>
+    <ng-template #sheetAnim>
+      <div class="flex flex-wrap gap-5 justify-start">
+        <app-container
+          *ngFor="let number of randomArray"
+          [loadAnimation]="true"
+          header="Placeholder"
+        >
+          <div class="w-40 h-56"></div>
+        </app-container>
+      </div>
+    </ng-template>
   </div>
 </div>

@@ -1,3 +1,8 @@
+import { FileViewerComponent } from './modal/file-viewer/file-viewer.component';
+import { DropdownComponent } from './dropdown/dropdown.component';
+import { ClickOutsideDirective } from './../_directives/click-outside.directive';
+import { SearchbarComponent } from './searchbar/searchbar.component';
+import { ExcerciseSheetComponent } from './excercise-sheet/excercise-sheet.component';
 import { DeleteSubjectComponent } from './modal/delete-subject/delete-subject.component';
 import { InputComponent } from './input/input.component';
 import { ExpansionCardComponent } from './expansion-card/expansion-card.component';
@@ -18,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UpdateProfileImageComponent } from './update-profile-image/update-profile-image.component';
+import { AddExcerciseSheetComponent } from './add-excercise-sheet/add-excercise-sheet.component';
 
 @NgModule({
   imports: [
@@ -26,6 +32,7 @@ import { UpdateProfileImageComponent } from './update-profile-image/update-profi
     ReactiveFormsModule,
     FontAwesomeModule,
     RouterModule,
+    ReactiveFormsModule,
   ],
   declarations: [
     ButtonComponent,
@@ -43,6 +50,12 @@ import { UpdateProfileImageComponent } from './update-profile-image/update-profi
     ExpansionCardComponent,
     InputComponent,
     DeleteSubjectComponent,
+    ExcerciseSheetComponent,
+    SearchbarComponent,
+    ClickOutsideDirective,
+    AddExcerciseSheetComponent,
+    DropdownComponent,
+    FileViewerComponent,
   ],
   exports: [
     ButtonComponent,
@@ -60,6 +73,12 @@ import { UpdateProfileImageComponent } from './update-profile-image/update-profi
     ExpansionCardComponent,
     InputComponent,
     DeleteSubjectComponent,
+    ExcerciseSheetComponent,
+    SearchbarComponent,
+    ClickOutsideDirective,
+    AddExcerciseSheetComponent,
+    DropdownComponent,
+    FileViewerComponent,
   ],
   providers: [AddSubjectComponent],
 })

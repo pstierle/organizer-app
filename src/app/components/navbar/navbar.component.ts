@@ -3,8 +3,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from './../../_services/auth.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
-import { faGraduationCap } from '@fortawesome/free-solid-svg-icons';
-
+import { faBlog } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -12,7 +11,7 @@ import { faGraduationCap } from '@fortawesome/free-solid-svg-icons';
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   faArrowRightFromBracket = faArrowRightFromBracket;
-  faGraduationCap = faGraduationCap;
+  logo = faBlog;
   subscription: Subscription | null = null;
   user: IUser | null = null;
 

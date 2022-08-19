@@ -1,3 +1,4 @@
+import { BehaviorSubject } from 'rxjs';
 import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import {
   ComponentPortal,
@@ -12,6 +13,8 @@ import {
 } from '@angular/core';
 
 export class FormModalOverlayRef {
+  event$ = new BehaviorSubject<any>(null);
+
   constructor(private overlayRef: OverlayRef) {
     this.overlayRef._outsidePointerEvents.subscribe((evt) => {
       this.close();

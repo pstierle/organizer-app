@@ -1,0 +1,6 @@
+<div appClickOutside (clickOutside)="open = false" class="relative">
+  <ng-content openContent></ng-content>
+  <div class="absolute mt-1" *ngIf="open">
+    <ng-content [select]="dropdownContent"></ng-content>
+  </div>
+</div>

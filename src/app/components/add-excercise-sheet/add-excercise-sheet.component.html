@@ -1,0 +1,21 @@
+<div appClickOutside (clickOutside)="open = false" class="relative">
+  <app-button
+    [style]="'primary'"
+    [loadAnimation]="loadAnim"
+    [disabled]="loadAnim"
+    (click)="open = !open"
+  >
+    <p>Blatt hinzufügen</p>
+  </app-button>
+  <div
+    *ngIf="open"
+    class="absolute p-2 flex flex-col gap-2 rounded border border-gray-600 mt-1 bg-neutral-800"
+  >
+    <app-input
+      label="Blattnummer"
+      type="number"
+      [(model)]="selectedSheetNumber"
+    ></app-input>
+    <app-button (click)="handleAdd()">hinzufügen</app-button>
+  </div>
+</div>

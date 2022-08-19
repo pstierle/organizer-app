@@ -1,6 +1,12 @@
 <div class="flex flex-col gap-4">
   <app-profile-image></app-profile-image>
-  <app-file-input [(file)]="selectedImage"></app-file-input>
+  <app-file-input [(file)]="selectedImage" accept=".jpg ,.jpeg ,.png">
+    <p
+      class="px-2 py-1 rounded text-neutral-200 text-sm bg-neutral-700 hover:bg-neutral-600 hover:border-blue-300 transition-colors border border-gray-600 hover:cursor-pointer"
+    >
+      Datei auswählen
+    </p>
+  </app-file-input>
   <div class="flex justify-between">
     <app-button
       [disabled]="!selectedImage"

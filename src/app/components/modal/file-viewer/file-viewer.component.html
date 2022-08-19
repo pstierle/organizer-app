@@ -1,0 +1,26 @@
+<div class="bg-neutral-700 p-5 rounded flex flex-col gap-5">
+  <p class="font-semibold text-neutral-200">
+    {{ data.submissionType }}: {{ currentIndex + 1 }}/{{
+      data.submissions.length
+    }}
+  </p>
+  <div class="flex gap-5">
+    <button (click)="prevSubmission()">
+      <fa-icon [icon]="leftIcon"></fa-icon>
+    </button>
+    <div *ngIf="selectedParsedFile">
+      <img [src]="selectedParsedFile" alt="Abgabe" />
+    </div>
+    <button (click)="nextSubmission()">
+      <fa-icon [icon]="rightIcon"></fa-icon>
+    </button>
+  </div>
+  <div class="flex justify-between">
+    <app-button [style]="'primary'" (click)="handleDownloadSubmission()"
+      >Herunterladen</app-button
+    >
+    <app-button [style]="'danger'" (click)="handleDeleteSubmission()"
+      >Löschen</app-button
+    >
+  </div>
+</div>

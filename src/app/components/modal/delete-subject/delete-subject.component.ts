@@ -1,15 +1,12 @@
 import { BaseComponent } from './../../../_utils/base.component';
-import { Observable, takeUntil } from 'rxjs';
+import { takeUntil } from 'rxjs';
 import { Router } from '@angular/router';
 import { ModalService } from 'src/app/_services/modal.service';
 import { Store } from '@ngrx/store';
 import { MODAL_DATA } from './../../../_services/modal.service';
 import { Component, Inject } from '@angular/core';
 import { deleteSubject } from 'src/app/_store/subjects/subjects.actions';
-import {
-  isLoading,
-  selectCurrent,
-} from 'src/app/_store/subjects/subjects.select';
+import { selectCurrent } from 'src/app/_store/subjects/subjects.select';
 
 export type DeleteSubjectModalData = {
   subjectId: string;

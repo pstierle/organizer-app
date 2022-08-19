@@ -1,9 +1,9 @@
-import { ISubmussion } from './ISubmission';
+import { ISubmission } from './ISubmission';
 
 export interface IExerciseSheet {
   id: string;
   number: number;
-  submissions: ISubmussion[];
+  submissions: ISubmission[];
   user_id: string;
   subject_id: string;
 }

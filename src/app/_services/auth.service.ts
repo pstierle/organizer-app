@@ -55,6 +55,13 @@ export class AuthService {
     }
   }
 
+  injectUserId = <T>(dataObject: Partial<T>) => {
+    return {
+      ...dataObject,
+      user_id: this.authUser?.id,
+    };
+  };
+
   authChanges(
     callback: (event: AuthChangeEvent, session: Session | null) => void
   ) {

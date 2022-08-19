@@ -2,11 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  @apply text-neutral-400;
-}
-
 body {
+  @apply text-neutral-400;
   @apply bg-neutral-800;
 }
 
@@ -52,4 +49,14 @@ body {
 }
 .pulse {
   animation: pulse-fast 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.grow-full {
+  display: flex;
+  flex: 1 1 auto;
+  flex-grow: 1;
+}
+
+.fill-height {
+  height: calc(100vh - 5rem);
 }

@@ -1,4 +1,3 @@
-import { IExerciseSheet } from './../../_models/IExerciseSheet';
 import { ISubject } from './../../_models/ISubject';
 import { createAction, props } from '@ngrx/store';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -22,7 +21,7 @@ export const addSubjectSuccess = createAction(
 
 export const updateSubject = createAction(
   '[Subjects] Update Subject',
-  props<{ subject: ISubject }>()
+  props<{ subjectId: string; data: Partial<ISubject> }>()
 );
 
 export const updateSubjectSuccess = createAction(
@@ -38,36 +37,6 @@ export const deleteSubject = createAction(
 export const deleteSubjectSuccess = createAction(
   '[Subjects] Delete Subjects Success',
   props<{ id: string }>()
-);
-
-export const addExcerciseSheet = createAction(
-  '[Subjects] Add ExcerciseSheet',
-  props<{ excerciseSheet: Partial<IExerciseSheet> }>()
-);
-
-export const addExcerciseSheetSuccess = createAction(
-  '[Subjects] Add ExcerciseSheets Success',
-  props<{ excerciseSheet: IExerciseSheet }>()
-);
-
-export const updateExcerciseSheet = createAction(
-  '[Subjects] Update ExcerciseSheet',
-  props<{ excerciseSheet: IExerciseSheet }>()
-);
-
-export const updateExcerciseSheetSuccess = createAction(
-  '[Subjects] Update ExcerciseSheets Success',
-  props<{ excerciseSheet: IExerciseSheet }>()
-);
-
-export const deleteExcerciseSheet = createAction(
-  '[Subjects] Delete ExcerciseSheet',
-  props<{ id: string }>()
-);
-
-export const deleteExcerciseSheetSuccess = createAction(
-  '[Subjects] Delete ExcerciseSheets Success',
-  props<{ subjectId: string; id: string }>()
 );
 
 export const handleError = createAction(

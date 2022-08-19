@@ -1,5 +1,3 @@
-import { IExerciseSheet } from './../../_models/IExerciseSheet';
-import { ExcerciseSheetService } from './../../_services/exercise-sheet.service';
 import { AuthService } from './../../_services/auth.service';
 import {
   getSubjects,
@@ -11,12 +9,6 @@ import {
   handleError,
   deleteSubject,
   deleteSubjectSuccess,
-  addExcerciseSheet,
-  addExcerciseSheetSuccess,
-  updateExcerciseSheet,
-  updateExcerciseSheetSuccess,
-  deleteExcerciseSheet,
-  deleteExcerciseSheetSuccess,
 } from './subjects.actions';
 import { ISubject } from './../../_models/ISubject';
 import { SubjectService } from './../../_services/subjects.service';
@@ -62,7 +54,7 @@ export class SubjectEffects {
       delay(500),
       switchMap((action) =>
         this.subjectsService
-          .update(action.subject.id, action.subject)
+          .update(action.subjectId, action.data)
           .pipe(map((subject: ISubject) => updateSubjectSuccess({ subject })))
       ),
       catchError((error) => of(handleError({ error })))
@@ -84,62 +76,9 @@ export class SubjectEffects {
     );
   });
 
-  addSheet$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(addExcerciseSheet),
-      delay(500),
-      switchMap((action) =>
-        this.excerciseSheetService
-          .addExcerciseSheet(action.excerciseSheet)
-          .pipe(
-            map((excerciseSheet: IExerciseSheet) =>
-              addExcerciseSheetSuccess({ excerciseSheet })
-            )
-          )
-      ),
-      catchError((error) => of(handleError({ error })))
-    );
-  });
-
-  updateSheet$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(updateExcerciseSheet),
-      delay(500),
-      switchMap((action) =>
-        this.excerciseSheetService
-          .update(action.excerciseSheet.id, action.excerciseSheet)
-          .pipe(
-            map((excerciseSheet: IExerciseSheet) =>
-              updateExcerciseSheetSuccess({ excerciseSheet })
-            )
-          )
-      ),
-      catchError((error) => of(handleError({ error })))
-    );
-  });
-
-  deleteSheet$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(deleteExcerciseSheet),
-      delay(500),
-      switchMap((action) =>
-        this.excerciseSheetService.delete(action.id).pipe(
-          map((excerciseSheet: IExerciseSheet) =>
-            deleteExcerciseSheetSuccess({
-              subjectId: excerciseSheet.subject_id,
-              id: action.id,
-            })
-          )
-        )
-      ),
-      catchError((error) => of(handleError({ error })))
-    );
-  });
-
   constructor(
     private actions$: Actions,
     private subjectsService: SubjectService,
-    private authService: AuthService,
-    private excerciseSheetService: ExcerciseSheetService
+    private authService: AuthService
   ) {}
 }

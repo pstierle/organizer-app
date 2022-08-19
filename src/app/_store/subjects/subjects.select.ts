@@ -32,5 +32,5 @@ export const selectGroupedBySemester = (state: any) => {
     }
   });
 
-  return groups;
+  return groups.sort((a, b) => a.semester - b.semester);
 };

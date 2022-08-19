@@ -8,6 +8,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class InputComponent {
   @Input() type: 'text' | 'number' | 'password' = 'text';
   @Input() model: any = '';
+  @Input() placeholder: any = '';
   focused = false;
   @Input() loadAnimation = false;
   @Output() modelChange = new EventEmitter<any>();

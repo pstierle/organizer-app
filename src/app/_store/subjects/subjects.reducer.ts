@@ -1,4 +1,3 @@
-import { ISubject } from './../../_models/ISubject';
 import { SubjectState } from './../store';
 import { createReducer, on } from '@ngrx/store';
 
@@ -17,9 +16,6 @@ export const subjectsReducer = createReducer(
     actions.addSubject,
     actions.updateSubject,
     actions.deleteSubject,
-    actions.addExcerciseSheet,
-    actions.updateExcerciseSheet,
-    actions.deleteExcerciseSheet,
     (state) => {
       return {
         ...state,
@@ -50,56 +46,6 @@ export const subjectsReducer = createReducer(
     const index = updated.findIndex((s) => s.id === subject.id);
     updated[index] = subject;
 
-    return {
-      ...state,
-      current: 'success',
-      subjects: updated,
-    };
-  }),
-
-  on(actions.addExcerciseSheetSuccess, (state, { excerciseSheet }) => {
-    let updated = state.subjects.slice();
-    let subject = updated.find((s) => s.id === excerciseSheet.subject_id);
-    const index = updated.findIndex((s) => s.id === excerciseSheet.subject_id);
-    if (subject) {
-      (subject as ISubject).excercise_sheets.push(excerciseSheet);
-      updated[index] = subject;
-    }
-    return {
-      ...state,
-      current: 'success',
-      subjects: updated,
-    };
-  }),
-
-  on(actions.deleteExcerciseSheetSuccess, (state, { subjectId, id }) => {
-    let updated = state.subjects.slice();
-    let subject = updated.find((s) => s.id === subjectId);
-    const index = updated.findIndex((s) => s.id === subjectId);
-    if (subject) {
-      (subject as ISubject).excercise_sheets = (
-        subject as ISubject
-      ).excercise_sheets.filter((sheet) => sheet.id !== id);
-      updated[index] = subject;
-    }
-    return {
-      ...state,
-      current: 'success',
-      subjects: updated,
-    };
-  }),
-
-  on(actions.updateExcerciseSheetSuccess, (state, { excerciseSheet }) => {
-    let updated = state.subjects.slice();
-    let subject = updated.find((s) => s.id === excerciseSheet.subject_id);
-    const index = updated.findIndex((s) => s.id === excerciseSheet.subject_id);
-    if (subject) {
-      const sheetIndex = (subject as ISubject).excercise_sheets.findIndex(
-        (s) => s.id === excerciseSheet.id
-      );
-      (subject as ISubject).excercise_sheets[sheetIndex] = excerciseSheet;
-      updated[index] = subject;
-    }
     return {
       ...state,
       current: 'success',
