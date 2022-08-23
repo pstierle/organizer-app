@@ -1,5 +1,6 @@
+import { BaseComponent } from './../../_utils/base.component';
 import { IUser } from './../../_models/IUser';
-import { Subscription } from 'rxjs';
+import { Observable, takeUntil } from 'rxjs';
 import { AuthService } from './../../_services/auth.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
@@ -9,22 +10,20 @@ import { faBlog } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent implements OnInit, OnDestroy {
+export class NavbarComponent
+  extends BaseComponent
+  implements OnInit, OnDestroy
+{
   faArrowRightFromBracket = faArrowRightFromBracket;
   logo = faBlog;
-  subscription: Subscription | null = null;
-  user: IUser | null = null;
+  user$?: Observable<IUser | undefined>;
 
-  constructor(private authService: AuthService) {}
-
-  ngOnInit(): void {
-    this.subscription = this.authService.getUser$().subscribe((user) => {
-      this.user = user;
-    });
+  constructor(private authService: AuthService) {
+    super();
   }
 
-  ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
+  ngOnInit(): void {
+    this.user$ = this.authService.getUser$();
   }
 
   async handleLogout() {

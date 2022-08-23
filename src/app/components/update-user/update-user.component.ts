@@ -21,7 +21,7 @@ export class UpdateUserComponent
   extends BaseComponent
   implements OnInit, OnDestroy
 {
-  user: IUser | null = null;
+  user?: IUser;
   loading = false;
   universityOptions: ISelectOption[] = [];
   courseOptions: ISelectOption[] = [];

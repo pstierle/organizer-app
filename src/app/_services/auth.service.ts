@@ -16,8 +16,10 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class AuthService {
   private supabase: SupabaseClient;
-  private userSubject = new BehaviorSubject<IUser | null>(null);
-  private profileImageSubject = new BehaviorSubject<Blob | null>(null);
+  private userSubject = new BehaviorSubject<IUser | undefined>(undefined);
+  private profileImageSubject = new BehaviorSubject<Blob | undefined>(
+    undefined
+  );
 
   constructor(
     private notificationService: NotificationService,
@@ -51,7 +53,7 @@ export class AuthService {
 
       return data;
     } else {
-      return null;
+      return undefined;
     }
   }
 
@@ -88,8 +90,8 @@ export class AuthService {
     email: string,
     password: string,
     name: string,
-    university_id: number | null,
-    course_id: number | null
+    university_id: number | undefined,
+    course_id: number | undefined
   ) {
     const { user, error } = await this.supabase.auth.signUp({
       email,
@@ -114,21 +116,21 @@ export class AuthService {
         return error;
       }
     }
-    return null;
+    return undefined;
   }
 
-  getUser$(): Observable<IUser | null> {
+  getUser$(): Observable<IUser | undefined> {
     return this.userSubject.asObservable();
   }
 
-  getProfileImage$(): Observable<Blob | null> {
+  getProfileImage$(): Observable<Blob | undefined> {
     return this.profileImageSubject.asObservable();
   }
 
   async signOut() {
     await this.supabase.auth.signOut();
-    this.userSubject.next(null);
-    this.profileImageSubject.next(null);
+    this.userSubject.next(undefined);
+    this.profileImageSubject.next(undefined);
     this.router.navigate(['auth/login']);
   }
 
@@ -171,10 +173,11 @@ export class AuthService {
   }
 
   async setProfileImage() {
+    if (!this.authUser) return;
     const { data } = await this.supabase.storage
       .from('profile-images')
       .download(this.profileImageName);
-    this.profileImageSubject.next(data);
+    this.profileImageSubject.next(data ?? undefined);
   }
 
   async setUser() {

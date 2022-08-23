@@ -14,7 +14,7 @@ export class LoginPage {
     password: new FormControl('', [Validators.required]),
   });
 
-  constructor(private authService: AuthService, private store: Store) {}
+  constructor(private authService: AuthService) {}
 
   async onSubmit() {
     await this.authService.signIn(

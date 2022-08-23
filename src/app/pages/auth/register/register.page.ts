@@ -56,11 +56,11 @@ export class RegisterPage extends BaseComponent implements OnInit, OnDestroy {
   async onSubmit() {
     const universityId =
       this.registerForm.get('university_id')?.value === ''
-        ? null
+        ? undefined
         : Number(this.registerForm.get('university_id')?.value);
     const courseId =
       this.registerForm.get('course_id')?.value === ''
-        ? null
+        ? undefined
         : Number(this.registerForm.get('course_id')?.value);
 
     const error = await this.authService.signUp(
