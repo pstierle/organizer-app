@@ -1,3 +1,4 @@
+import { SubmissionEffects } from './_store/submissions/submissions.effects';
 import { RouterModule } from '@angular/router';
 import { ModalService } from './_services/modal.service';
 import { SubjectEffects } from './_store/subjects/subjects.effects';
@@ -21,6 +22,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EffectsModule } from '@ngrx/effects';
 import { UniversitiesEffects } from './_store/universities/universities.effects';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { submissionReducer } from './_store/submissions/submissions.reducer';
 
 function initializeUser(authService: AuthService): () => any {
   return () => authService.init();
@@ -42,12 +44,14 @@ function initializeUser(authService: AuthService): () => any {
       CourseAreasEffects,
       CourseEffects,
       SubjectEffects,
+      SubmissionEffects,
     ]),
     StoreModule.forRoot({
       universityState: universitiesReducer,
       courseAreaState: courseAreaReducer,
       courseState: coursesReducer,
       subjectState: subjectsReducer,
+      submissionState: submissionReducer,
     }),
   ],
   providers: [

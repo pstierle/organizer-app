@@ -112,15 +112,6 @@ export class BaseService<T> {
     return from(query).pipe(map((res) => res.body as T));
   }
 
-  async createRaw(model: Partial<T>): Promise<T> {
-    const { data, error } = await this.supabase
-      .from(this.resource)
-      .insert({ ...model })
-      .single();
-
-    return data as T;
-  }
-
   createMany(models: Partial<T>[]): Observable<T[]> {
     const query = this.supabase.from(this.resource).insert(models);
     return from(query).pipe(map((res) => res.body as T[]));

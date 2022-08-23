@@ -1,8 +1,6 @@
 <div class="bg-neutral-700 p-5 rounded flex flex-col gap-5">
   <p class="font-semibold text-neutral-200">
-    {{ data.submissionType }}: {{ currentIndex + 1 }}/{{
-      data.submissions.length
-    }}
+    {{ data.submissionType }}: {{ currentIndex + 1 }}/{{ submissions.length }}
   </p>
   <div class="flex gap-5">
     <button (click)="prevSubmission()">

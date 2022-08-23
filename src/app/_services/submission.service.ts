@@ -15,31 +15,30 @@ export class SubmissionService extends BaseService<ISubmission> {
     return 'private/' + this.authService.authUser?.id + '-' + submission.id;
   }
 
-  fetchUserSubmissionsBySheet(sheeetId: string) {
+  fetchUserSubmissions() {
     return this.find('id, type, fileType, exercise_sheet_id', [
       ['user_id', 'eq', this.authService.authUser?.id],
-      ['exercise_sheet_id', 'eq', sheeetId],
     ]);
   }
 
-  async addSubmission(submission: Partial<ISubmission>, file: File) {
-    const newSubmission = await this.createRaw({
-      ...this.authService.injectUserId(submission),
-    });
-
-    this.supabase.storage
-      .from('submissions')
-      .upload(this.getFilePath(newSubmission), file);
-
-    return newSubmission;
+  addSubmission(data: Partial<ISubmission>) {
+    return this.create(this.authService.injectUserId(data));
   }
 
-  async deleteSubmission(submission: ISubmission) {
-    await this.supabase.storage
+  uploadFile(submission: ISubmission, file: File) {
+    this.supabase.storage
+      .from('submissions')
+      .upload(this.getFilePath(submission), file);
+  }
+
+  deleteFile(submission: ISubmission) {
+    this.supabase.storage
       .from('submissions')
       .remove([this.getFilePath(submission)]);
+  }
 
-    return this.delete(submission.id);
+  deleteSubmission(id: string) {
+    return this.delete(id);
   }
 
   async getFileBySubmission(submission: ISubmission) {

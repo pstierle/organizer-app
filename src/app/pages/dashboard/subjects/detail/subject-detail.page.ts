@@ -1,3 +1,4 @@
+import { getSubmissions } from './../../../../_store/submissions/submissions.actions';
 import { ExcerciseSheetService } from './../../../../_services/exercise-sheet.service';
 import { IExerciseSheet } from './../../../../_models/IExerciseSheet';
 import { AuthService } from 'src/app/_services/auth.service';
@@ -43,6 +44,7 @@ export class SubjectDetailPage
   }
 
   ngOnInit(): void {
+    this.store.dispatch(getSubmissions());
     this.route.paramMap
       .pipe(
         takeUntil(this.destroy$),

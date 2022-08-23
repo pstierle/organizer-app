@@ -1,3 +1,4 @@
+import { Store } from '@ngrx/store';
 import { SubmissionService } from './../../../_services/submission.service';
 import { BaseComponent } from './../../../_utils/base.component';
 import { ISubmission, SubmissionType } from './../../../_models/ISubmission';
@@ -9,10 +10,15 @@ import {
   faCircleArrowRight,
   faCircleArrowLeft,
 } from '@fortawesome/free-solid-svg-icons';
+import {
+  selectSubmissions,
+  selectSubmissionsByType,
+} from 'src/app/_store/submissions/submissions.select';
+import { deleteSubmission } from 'src/app/_store/submissions/submissions.actions';
 
 export type FileViewerModalData = {
   submissionType: SubmissionType;
-  submissions: ISubmission[];
+  sheetId: string;
 };
 
 @Component({
@@ -26,22 +32,39 @@ export class FileViewerComponent extends BaseComponent implements OnInit {
   leftIcon = faCircleArrowLeft;
   rightIcon = faCircleArrowRight;
   selectedRawFile: any = null;
+  submissions!: ISubmission[];
 
   constructor(
     @Inject(MODAL_DATA) public data: FileViewerModalData,
     private submissionService: SubmissionService,
     private sanitizer: DomSanitizer,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private store: Store
   ) {
     super();
   }
 
   ngOnInit(): void {
+    this.store
+      .select((state) =>
+        selectSubmissionsByType(
+          state,
+          this.data.sheetId,
+          this.data.submissionType
+        )
+      )
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((submissions) => {
+        this.submissions = submissions;
+        if (submissions.length === 0) this.modalService.dialogRef.close();
+        console.log(submissions);
+      });
+
     this.currentIndex$
       .pipe(takeUntil(this.destroy$))
       .subscribe(async (current) => {
         const file = await this.submissionService.getFileBySubmission(
-          this.data.submissions[current]
+          this.submissions[current]
         );
         if (!file) return;
         this.selectedRawFile = file;
@@ -53,7 +76,7 @@ export class FileViewerComponent extends BaseComponent implements OnInit {
   nextSubmission() {
     let current = this.currentIndex$.getValue();
 
-    if (current === this.data.submissions.length - 1) {
+    if (current === this.submissions.length - 1) {
       current = 0;
     } else {
       current++;
@@ -66,7 +89,7 @@ export class FileViewerComponent extends BaseComponent implements OnInit {
     let current = this.currentIndex$.getValue();
 
     if (current === 0) {
-      current = this.data.submissions.length - 1;
+      current = this.submissions.length - 1;
     } else {
       current--;
     }
@@ -83,10 +106,7 @@ export class FileViewerComponent extends BaseComponent implements OnInit {
   }
 
   handleDeleteSubmission() {
-    this.modalService.dialogRef.event$.next(this.selectedSubmission);
-    this.data.submissions = this.data.submissions.filter(
-      (s) => s.id !== this.selectedSubmission.id
-    );
+    this.store.dispatch(deleteSubmission(this.selectedSubmission));
     this.prevSubmission();
   }
 
@@ -95,6 +115,6 @@ export class FileViewerComponent extends BaseComponent implements OnInit {
   }
 
   get selectedSubmission() {
-    return this.data.submissions[this.currentIndex];
+    return this.submissions[this.currentIndex];
   }
 }
