@@ -24,16 +24,15 @@ import { selectSubmissions } from 'src/app/_store/submissions/submissions.select
 export class ExcerciseSheetComponent extends BaseComponent implements OnInit {
   @Input() sheet!: IExerciseSheet;
   @Output() removeSheet = new EventEmitter<string>();
+  @Output() addSumbission = new EventEmitter<{
+    sheetId: string;
+    type: SubmissionType;
+  }>();
 
   submisstionTypes: SubmissionType[] = ['Abgabe', 'Lösung', 'Korrektur'];
   showIcon = faEye;
   uploadIcon = faFileArrowUp;
-  downloadIcon = faFileArrowDown;
-  countByType = {
-    Abgabe: 0,
-    Lösung: 0,
-    Korrektur: 0,
-  };
+  countByType: any = {};
 
   trashIcon = faTrashCan;
 
@@ -42,13 +41,14 @@ export class ExcerciseSheetComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('init');
     this.store
       .select((state) => selectSubmissions(state, this.sheet.id))
       .pipe(takeUntil(this.destroy$))
       .subscribe((submissions) => {
-        submissions.forEach((s) => (this.countByType[s.type] += 1));
-        console.log(submissions, 'fsd');
+        this.submisstionTypes.forEach((type) => {
+          this.countByType[type] =
+            submissions.filter((s) => s.type === type).length ?? 0;
+        });
       });
   }
 
@@ -70,7 +70,9 @@ export class ExcerciseSheetComponent extends BaseComponent implements OnInit {
     );
   }
 
-  handleUploadFileChange(file: File, type: any) {
+  handleUploadFileChange(file: File, type: SubmissionType) {
+    console.log(this.sheet.id);
+    return;
     this.store.dispatch(
       addSubmission({
         submission: {
