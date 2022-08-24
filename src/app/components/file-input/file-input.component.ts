@@ -9,6 +9,7 @@ export class FileInputComponent implements OnInit {
   @Input() file: File | null = null;
   @Input() showFileName: boolean = true;
   @Input() accept!: string;
+  @Input() id!: any;
   @Output() fileChange = new EventEmitter<File>();
 
   constructor() {}

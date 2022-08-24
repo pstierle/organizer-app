@@ -1,11 +1,11 @@
 <div
   class="bg-neutral-700 py-1 px-2 rounded flex justify-between items-center transition-all"
   [ngClass]="
-    focused ? 'ring-[1px] ring-blue-200' : loadAnimation ? 'pulse' : ''
+    focused ? 'ring-[1.6px] ring-blue-400' : loadAnimation ? 'pulse' : ''
   "
 >
   <input
-    class="outline-none border-none bg-transparent truncate text-neutral-200"
+    class="outline-none border-none bg-transparent truncate text-neutral-200 placeholder:text-sm"
     [(ngModel)]="model"
     (ngModelChange)="modelChange.emit(model)"
     [type]="type"

@@ -1,3 +1,4 @@
+import { NotificationService } from './../../_services/notification.service';
 import { BaseComponent } from './../../_utils/base.component';
 import { selectCoursesAsOptions } from './../../_store/courses/courses.select';
 import { ISelectOption } from './../../_models/ISelectOption';
@@ -49,9 +50,17 @@ export class UpdateUserComponent
       course_id: courseId,
     });
     this.loading = false;
+    this.notificationService.send({
+      type: 'success',
+      message: 'Profil erfolgreich bearbeitet',
+    });
   }
 
-  constructor(private authService: AuthService, private store: Store) {
+  constructor(
+    private authService: AuthService,
+    private store: Store,
+    private notificationService: NotificationService
+  ) {
     super();
   }
 

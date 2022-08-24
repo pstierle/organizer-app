@@ -1,6 +1,7 @@
 <div
-  class="rounded ring-[1.8px] ring-blue-400"
+  class="rounded ring-[1.6px] ring-blue-400"
   [ngClass]="loadAnimation ? 'pulse' : ''"
+  [id]="id"
 >
   <div *ngIf="header && !loadAnimation" class="py-3 px-7 text-neutral-200">
     {{ header }}

@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ContainerComponent implements OnInit {
   @Input() header: string = '';
   @Input() loadAnimation = false;
+  @Input() id?: string;
 
   constructor() {}
 

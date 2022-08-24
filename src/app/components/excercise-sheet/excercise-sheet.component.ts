@@ -15,6 +15,7 @@ import { faFileArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { faFileArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 import { selectSubmissions } from 'src/app/_store/submissions/submissions.select';
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-excercise-sheet',
@@ -23,13 +24,15 @@ import { selectSubmissions } from 'src/app/_store/submissions/submissions.select
 })
 export class ExcerciseSheetComponent extends BaseComponent implements OnInit {
   @Input() sheet!: IExerciseSheet;
+  @Input() id!: any;
   @Output() removeSheet = new EventEmitter<string>();
   @Output() addSumbission = new EventEmitter<{
-    sheetId: string;
+    file: File;
     type: SubmissionType;
   }>();
+  pencilIcon = faPenToSquare;
 
-  submisstionTypes: SubmissionType[] = ['Abgabe', 'Lösung', 'Korrektur'];
+  submissionTypes: SubmissionType[] = ['Abgabe', 'Lösung', 'Korrektur'];
   showIcon = faEye;
   uploadIcon = faFileArrowUp;
   countByType: any = {};
@@ -45,7 +48,7 @@ export class ExcerciseSheetComponent extends BaseComponent implements OnInit {
       .select((state) => selectSubmissions(state, this.sheet.id))
       .pipe(takeUntil(this.destroy$))
       .subscribe((submissions) => {
-        this.submisstionTypes.forEach((type) => {
+        this.submissionTypes.forEach((type) => {
           this.countByType[type] =
             submissions.filter((s) => s.type === type).length ?? 0;
         });
@@ -70,18 +73,10 @@ export class ExcerciseSheetComponent extends BaseComponent implements OnInit {
     );
   }
 
-  handleUploadFileChange(file: File, type: SubmissionType) {
-    console.log(this.sheet.id);
-    return;
-    this.store.dispatch(
-      addSubmission({
-        submission: {
-          type,
-          fileType: file.type,
-          exercise_sheet_id: this.sheet.id,
-        },
-        file: file,
-      })
-    );
+  handleUploadFile(file: File, type: SubmissionType) {
+    this.addSumbission.emit({
+      type,
+      file,
+    });
   }
 }

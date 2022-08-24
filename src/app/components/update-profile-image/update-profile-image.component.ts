@@ -1,3 +1,4 @@
+import { NotificationService } from './../../_services/notification.service';
 import { AuthService } from 'src/app/_services/auth.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -9,12 +10,21 @@ import { Component, OnInit } from '@angular/core';
 export class UpdateProfileImageComponent implements OnInit {
   selectedImage: File | null = null;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private notificationService: NotificationService
+  ) {}
 
   ngOnInit(): void {}
 
   async handleUpdateImage() {
-    if (this.selectedImage)
+    if (this.selectedImage) {
       await this.authService.updateProfileImage(this.selectedImage);
+
+      this.notificationService.send({
+        type: 'success',
+        message: 'Profilbild erfolgreich geändert',
+      });
+    }
   }
 }

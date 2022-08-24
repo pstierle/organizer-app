@@ -33,6 +33,7 @@ export class FileViewerComponent extends BaseComponent implements OnInit {
   rightIcon = faCircleArrowRight;
   selectedRawFile: any = null;
   submissions!: ISubmission[];
+  loadingFile = false;
 
   constructor(
     @Inject(MODAL_DATA) public data: FileViewerModalData,
@@ -63,6 +64,7 @@ export class FileViewerComponent extends BaseComponent implements OnInit {
     this.currentIndex$
       .pipe(takeUntil(this.destroy$))
       .subscribe(async (current) => {
+        this.loadingFile = true;
         const file = await this.submissionService.getFileBySubmission(
           this.submissions[current]
         );
@@ -70,6 +72,7 @@ export class FileViewerComponent extends BaseComponent implements OnInit {
         this.selectedRawFile = file;
         var url = window.URL.createObjectURL(file);
         this.selectedParsedFile = this.sanitizer.bypassSecurityTrustUrl(url);
+        this.loadingFile = false;
       });
   }
 

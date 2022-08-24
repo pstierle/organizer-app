@@ -22,14 +22,13 @@
         >Fach löschen</app-button
       >
     </div>
-    <div
-      *ngIf="subject; else sheetAnim"
-      class="flex flex-wrap gap-5 justify-start"
-    >
+    <div *ngIf="subject; else sheetAnim" class="flex flex-col gap-5">
       <app-excercise-sheet
-        *ngFor="let sheet of subject.excercise_sheets"
+        *ngFor="let sheet of subject.excercise_sheets; let i = index"
         [sheet]="sheet"
         (removeSheet)="handleDeleteSheet($event)"
+        (addSumbission)="handleAddSubmission($event, sheet.id)"
+        [id]="i + 'excercise-sheet'"
       >
       </app-excercise-sheet>
     </div>

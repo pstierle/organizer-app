@@ -1,4 +1,8 @@
-import { getSubmissions } from './../../../../_store/submissions/submissions.actions';
+import { SubmissionType } from './../../../../_models/ISubmission';
+import {
+  addSubmission,
+  getSubmissions,
+} from './../../../../_store/submissions/submissions.actions';
 import { ExcerciseSheetService } from './../../../../_services/exercise-sheet.service';
 import { IExerciseSheet } from './../../../../_models/IExerciseSheet';
 import { AuthService } from 'src/app/_services/auth.service';
@@ -120,6 +124,22 @@ export class SubjectDetailPage
       .subscribe((sheet) => {
         this.subject?.excercise_sheets.push(sheet);
       });
+  }
+
+  handleAddSubmission(
+    data: { file: File; type: SubmissionType },
+    sheetId: string
+  ) {
+    this.store.dispatch(
+      addSubmission({
+        submission: {
+          type: data.type,
+          fileType: data.file.type,
+          exercise_sheet_id: sheetId,
+        },
+        file: data.file,
+      })
+    );
   }
 
   get randomArray() {

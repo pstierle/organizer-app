@@ -1,33 +1,11 @@
-<app-container [header]="'Blatt - ' + sheet.number">
-  <div class="w-40 h-56 flex flex-col justify-between">
-    <div class="flex flex-col gap-4">
-      <div
-        class="flex justify-between items-center"
-        *ngFor="let type of submisstionTypes"
-      >
-        <p>{{ type }} - {{ countByType[type] }}</p>
-        <div class="flex items-center gap-2">
-          <button
-            *ngIf="countByType[type] > 0"
-            (click)="handleOpenSubmission(type)"
-          >
-            <fa-icon [icon]="showIcon" class="hover:text-neutral-200"></fa-icon>
-          </button>
-          <app-file-input
-            accept=".jpg ,.jpeg ,.png"
-            [showFileName]="false"
-            (fileChange)="handleUploadFileChange($event, type)"
-          >
-            <fa-icon
-              [icon]="uploadIcon"
-              class="hover:text-neutral-200 hover:cursor-pointer"
-              label
-            ></fa-icon>
-          </app-file-input>
-        </div>
-      </div>
+<div class="flex flex-col justify-between p-5 border rounded border-gray-600">
+  <div class="flex justify-between border-b-2 border-blue-400 pb-2">
+    <div class="flex items-center gap-2">
+      <p class="font-semibold text-neutral-200">Blatt {{ sheet.number }}</p>
+      <app-input placeholder="Themenbereich (max-10)">
+        <fa-icon [icon]="pencilIcon"></fa-icon>
+      </app-input>
     </div>
-
     <app-button (click)="handleDelete()" [style]="'danger'">
       <div class="flex items-center gap-3">
         <p>Löschen</p>
@@ -35,4 +13,32 @@
       </div>
     </app-button>
   </div>
-</app-container>
+  <div class="flex flex-col gap-4 p-2">
+    <div
+      class="flex justify-between items-center"
+      *ngFor="let type of submissionTypes"
+    >
+      <p>{{ type }} - {{ countByType[type] }}</p>
+      <div class="flex items-center gap-2">
+        <button
+          *ngIf="countByType[type] > 0"
+          (click)="handleOpenSubmission(type)"
+        >
+          <fa-icon [icon]="showIcon" class="hover:text-neutral-200"></fa-icon>
+        </button>
+        <app-file-input
+          accept=".jpg ,.jpeg ,.png"
+          [showFileName]="false"
+          (fileChange)="handleUploadFile($event, type)"
+          [id]="'add-submission-' + type"
+        >
+          <fa-icon
+            [icon]="uploadIcon"
+            class="hover:text-neutral-200 hover:cursor-pointer"
+            label
+          ></fa-icon>
+        </app-file-input>
+      </div>
+    </div>
+  </div>
+</div>

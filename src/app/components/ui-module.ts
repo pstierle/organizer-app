@@ -1,3 +1,4 @@
+import { FadeTransitionComponent } from './transitions/fade-transition/fade-transition.component';
 import { FileViewerComponent } from './modal/file-viewer/file-viewer.component';
 import { DropdownComponent } from './dropdown/dropdown.component';
 import { ClickOutsideDirective } from './../_directives/click-outside.directive';
@@ -56,6 +57,7 @@ import { AddExcerciseSheetComponent } from './add-excercise-sheet/add-excercise-
     AddExcerciseSheetComponent,
     DropdownComponent,
     FileViewerComponent,
+    FadeTransitionComponent,
   ],
   exports: [
     ButtonComponent,
@@ -79,6 +81,7 @@ import { AddExcerciseSheetComponent } from './add-excercise-sheet/add-excercise-
     AddExcerciseSheetComponent,
     DropdownComponent,
     FileViewerComponent,
+    FadeTransitionComponent,
   ],
   providers: [AddSubjectComponent],
 })

@@ -1,5 +1,5 @@
 <div class="flex gap-2 items-center">
-  <label for="file">
+  <label [for]="id">
     <ng-content [select]="label"></ng-content>
   </label>
   <p
@@ -11,7 +11,7 @@
   <input
     type="file"
     [accept]="accept"
-    id="file"
+    [id]="id"
     (change)="handleChange($event)"
     class="hidden"
   />
