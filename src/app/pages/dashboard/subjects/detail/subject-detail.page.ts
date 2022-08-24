@@ -44,9 +44,6 @@ export class SubjectDetailPage
   ngOnInit(): void {
     this.store.dispatch(getSubmissions());
     this.excerciseSheets$ = this.store.select(selectExcerciseSheets);
-
-    this.excerciseSheets$.subscribe((sheets) => console.log(sheets));
-
     this.route.paramMap
       .pipe(
         takeUntil(this.destroy$),

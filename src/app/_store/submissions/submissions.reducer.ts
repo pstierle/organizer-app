@@ -44,7 +44,6 @@ export const submissionReducer = createReducer(
   }),
 
   on(actions.addSubmissionSuccess, (state, { submission }): SubmissionState => {
-    console.log(submission);
     return {
       ...state,
       current: 'success',

@@ -58,7 +58,6 @@ export class FileViewerComponent extends BaseComponent implements OnInit {
       .subscribe((submissions) => {
         this.submissions = submissions;
         if (submissions.length === 0) this.modalService.dialogRef.close();
-        console.log(submissions);
       });
 
     this.currentIndex$

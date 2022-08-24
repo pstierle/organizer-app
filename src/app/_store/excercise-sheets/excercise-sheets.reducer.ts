@@ -65,7 +65,6 @@ export const excerciseSheetReducer = createReducer(
   on(
     actions.addExcerciseSheetSuccess,
     (state, { excerciseSheet }): ExcerciseSheetState => {
-      console.log('adding');
       return {
         ...state,
         current: 'success',
