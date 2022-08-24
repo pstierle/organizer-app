@@ -1,3 +1,4 @@
+import { updateExcerciseSheet } from './../../_store/excercise-sheets/excercise-sheets.actions';
 import { addSubmission } from './../../_store/submissions/submissions.actions';
 import { Store } from '@ngrx/store';
 import {
@@ -9,13 +10,13 @@ import { takeUntil } from 'rxjs';
 import { BaseComponent } from './../../_utils/base.component';
 import { SubmissionType } from './../../_models/ISubmission';
 import { IExerciseSheet } from './../../_models/IExerciseSheet';
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { faFileArrowUp } from '@fortawesome/free-solid-svg-icons';
-import { faFileArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 import { selectSubmissions } from 'src/app/_store/submissions/submissions.select';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { deleteExcerciseSheet } from 'src/app/_store/excercise-sheets/excercise-sheets.actions';
 
 @Component({
   selector: 'app-excercise-sheet',
@@ -25,17 +26,13 @@ import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 export class ExcerciseSheetComponent extends BaseComponent implements OnInit {
   @Input() sheet!: IExerciseSheet;
   @Input() id!: any;
-  @Output() removeSheet = new EventEmitter<string>();
-  @Output() addSumbission = new EventEmitter<{
-    file: File;
-    type: SubmissionType;
-  }>();
   pencilIcon = faPenToSquare;
 
   submissionTypes: SubmissionType[] = ['Abgabe', 'Lösung', 'Korrektur'];
   showIcon = faEye;
   uploadIcon = faFileArrowUp;
   countByType: any = {};
+  topicModel = '';
 
   trashIcon = faTrashCan;
 
@@ -44,6 +41,8 @@ export class ExcerciseSheetComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.topicModel = this.sheet.topic ?? '';
+
     this.store
       .select((state) => selectSubmissions(state, this.sheet.id))
       .pipe(takeUntil(this.destroy$))
@@ -56,7 +55,11 @@ export class ExcerciseSheetComponent extends BaseComponent implements OnInit {
   }
 
   handleDelete() {
-    this.removeSheet.emit(this.sheet.id);
+    this.store.dispatch(
+      deleteExcerciseSheet({
+        id: this.sheet.id,
+      })
+    );
   }
 
   handleOpenSubmission(type: SubmissionType) {
@@ -74,9 +77,28 @@ export class ExcerciseSheetComponent extends BaseComponent implements OnInit {
   }
 
   handleUploadFile(file: File, type: SubmissionType) {
-    this.addSumbission.emit({
-      type,
-      file,
-    });
+    this.store.dispatch(
+      addSubmission({
+        submission: {
+          type,
+          fileType: file.type,
+          exercise_sheet_id: this.sheet.id,
+        },
+        file,
+      })
+    );
+  }
+
+  handleBlur() {
+    if (this.sheet.topic !== this.topicModel) {
+      this.store.dispatch(
+        updateExcerciseSheet({
+          excerciseSheetId: this.sheet.id,
+          data: {
+            topic: this.topicModel,
+          },
+        })
+      );
+    }
   }
 }

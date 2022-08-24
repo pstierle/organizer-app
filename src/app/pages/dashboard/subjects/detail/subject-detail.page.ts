@@ -1,9 +1,5 @@
-import { SubmissionType } from './../../../../_models/ISubmission';
-import {
-  addSubmission,
-  getSubmissions,
-} from './../../../../_store/submissions/submissions.actions';
-import { ExcerciseSheetService } from './../../../../_services/exercise-sheet.service';
+import { getExcerciseSheets } from './../../../../_store/excercise-sheets/excercise-sheets.actions';
+import { getSubmissions } from './../../../../_store/submissions/submissions.actions';
 import { IExerciseSheet } from './../../../../_models/IExerciseSheet';
 import { AuthService } from 'src/app/_services/auth.service';
 import {
@@ -12,16 +8,15 @@ import {
 } from './../../../../components/modal/delete-subject/delete-subject.component';
 import { updateSubject } from './../../../../_store/subjects/subjects.actions';
 import { Store } from '@ngrx/store';
-import {
-  SubjectService,
-  SubjectWithExerciseSheet,
-} from './../../../../_services/subjects.service';
+import { SubjectService } from './../../../../_services/subjects.service';
 import { takeUntil, switchMap, Observable, delay } from 'rxjs';
 import { BaseComponent } from './../../../../_utils/base.component';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { ModalService } from 'src/app/_services/modal.service';
+import { ISubject } from 'src/app/_models/ISubject';
+import { selectExcerciseSheets } from 'src/app/_store/excercise-sheets/excercise-sheets.select';
 
 @Component({
   selector: 'app-subject-detail',
@@ -32,7 +27,8 @@ export class SubjectDetailPage
   extends BaseComponent
   implements OnInit, OnDestroy
 {
-  subject?: SubjectWithExerciseSheet;
+  subject?: ISubject;
+  excerciseSheets$?: Observable<IExerciseSheet[]>;
   nameModel!: string;
   pencilIcon = faPenToSquare;
 
@@ -40,15 +36,17 @@ export class SubjectDetailPage
     private route: ActivatedRoute,
     private subjectService: SubjectService,
     private store: Store,
-    private modalService: ModalService,
-    private authService: AuthService,
-    private excerciseSheetService: ExcerciseSheetService
+    private modalService: ModalService
   ) {
     super();
   }
 
   ngOnInit(): void {
     this.store.dispatch(getSubmissions());
+    this.excerciseSheets$ = this.store.select(selectExcerciseSheets);
+
+    this.excerciseSheets$.subscribe((sheets) => console.log(sheets));
+
     this.route.paramMap
       .pipe(
         takeUntil(this.destroy$),
@@ -56,12 +54,19 @@ export class SubjectDetailPage
           this.subject = undefined;
           const id = paramMap.get('id');
           if (!id) return new Observable();
-          return this.subjectService.fetchSubjectById(id);
+          else {
+            this.store.dispatch(
+              getExcerciseSheets({
+                subjectId: id,
+              })
+            );
+            return this.subjectService.fetchSubjectById(id);
+          }
         }),
         delay(500)
       )
       .subscribe((subject) => {
-        this.subject = subject as SubjectWithExerciseSheet;
+        this.subject = subject as ISubject;
         this.nameModel = this.subject?.name;
       });
   }
@@ -95,50 +100,6 @@ export class SubjectDetailPage
           subjectId: this.subject.id,
         },
       }
-    );
-  }
-
-  handleDeleteSheet(id: string) {
-    this.excerciseSheetService
-      .deleteExcerciseSheet(id)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((sheet) => {
-        if (!this.subject) return;
-        this.subject.excercise_sheets = this.subject.excercise_sheets.filter(
-          (s) => s.id !== id
-        );
-      });
-  }
-
-  handleAddExcerciseSheet(sheetNumber: number) {
-    if (!this.subject) return;
-
-    const newSheet = this.authService.injectUserId<IExerciseSheet>({
-      number: sheetNumber,
-      subject_id: this.subject.id,
-    });
-
-    this.excerciseSheetService
-      .addExcerciseSheet(newSheet)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((sheet) => {
-        this.subject?.excercise_sheets.push(sheet);
-      });
-  }
-
-  handleAddSubmission(
-    data: { file: File; type: SubmissionType },
-    sheetId: string
-  ) {
-    this.store.dispatch(
-      addSubmission({
-        submission: {
-          type: data.type,
-          fileType: data.file.type,
-          exercise_sheet_id: sheetId,
-        },
-        file: data.file,
-      })
     );
   }
 

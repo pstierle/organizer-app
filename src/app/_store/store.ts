@@ -5,6 +5,7 @@ import { IUniversity } from './../_models/IUniversity';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ICourse } from '../_models/ICourse';
 import { ISubmission } from '../_models/ISubmission';
+import { IExerciseSheet } from '../_models/IExerciseSheet';
 
 export type UniversitiesState = {
   universities: IUniversity[];
@@ -36,10 +37,17 @@ export type SubmissionState = {
   error?: HttpErrorResponse;
 };
 
+export type ExcerciseSheetState = {
+  excerciseSheets: IExerciseSheet[];
+  current: IFetchState;
+  error?: HttpErrorResponse;
+};
+
 export type AppState = {
   universityState: UniversitiesState;
   courseAreaState: CourseAreasState;
   courseState: CourseState;
   subjectState: SubjectState;
   submissionState: SubmissionState;
+  excerciseSheetState: ExcerciseSheetState;
 };

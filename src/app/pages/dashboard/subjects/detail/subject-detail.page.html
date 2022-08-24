@@ -10,8 +10,8 @@
           <fa-icon [icon]="pencilIcon"></fa-icon>
         </app-input>
         <app-add-excercise-sheet
-          (add)="handleAddExcerciseSheet($event)"
           [loadAnim]="!subject"
+          [subject_id]="subject?.id"
         ></app-add-excercise-sheet>
       </div>
 
@@ -24,11 +24,8 @@
     </div>
     <div *ngIf="subject; else sheetAnim" class="flex flex-col gap-5">
       <app-excercise-sheet
-        *ngFor="let sheet of subject.excercise_sheets; let i = index"
+        *ngFor="let sheet of excerciseSheets$ | async; let i = index"
         [sheet]="sheet"
-        (removeSheet)="handleDeleteSheet($event)"
-        (addSumbission)="handleAddSubmission($event, sheet.id)"
-        [id]="i + 'excercise-sheet'"
       >
       </app-excercise-sheet>
     </div>

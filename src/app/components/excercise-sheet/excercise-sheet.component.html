@@ -2,7 +2,11 @@
   <div class="flex justify-between border-b-2 border-blue-400 pb-2">
     <div class="flex items-center gap-2">
       <p class="font-semibold text-neutral-200">Blatt {{ sheet.number }}</p>
-      <app-input placeholder="Themenbereich (max-10)">
+      <app-input
+        placeholder="Themenbereich (max-10)"
+        [(model)]="topicModel"
+        (blur)="handleBlur()"
+      >
         <fa-icon [icon]="pencilIcon"></fa-icon>
       </app-input>
     </div>

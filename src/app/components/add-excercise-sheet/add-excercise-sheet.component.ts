@@ -1,4 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { addExcerciseSheet } from './../../_store/excercise-sheets/excercise-sheets.actions';
+import { Store } from '@ngrx/store';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-add-excercise-sheet',
@@ -7,12 +9,20 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class AddExcerciseSheetComponent {
   @Input() loadAnim!: boolean;
-  @Output() add = new EventEmitter<number>();
+  @Input() subject_id?: string;
   open = false;
   selectedSheetNumber = 0;
 
+  constructor(private store: Store) {}
+
   handleAdd() {
-    console.log('emitting');
-    this.add.emit(this.selectedSheetNumber);
+    this.store.dispatch(
+      addExcerciseSheet({
+        excerciseSheet: {
+          number: this.selectedSheetNumber,
+          subject_id: this.subject_id,
+        },
+      })
+    );
   }
 }

@@ -4,7 +4,7 @@ import { BaseComponent } from './../../../_utils/base.component';
 import { ISubmission, SubmissionType } from './../../../_models/ISubmission';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MODAL_DATA, ModalService } from 'src/app/_services/modal.service';
-import { BehaviorSubject, takeUntil } from 'rxjs';
+import { BehaviorSubject, delay, takeUntil, tap } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 import {
   faCircleArrowRight,
@@ -62,9 +62,16 @@ export class FileViewerComponent extends BaseComponent implements OnInit {
       });
 
     this.currentIndex$
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        takeUntil(this.destroy$),
+        tap((val) => {
+          this.loadingFile = true;
+        }),
+        delay(400)
+      )
       .subscribe(async (current) => {
         this.loadingFile = true;
+
         const file = await this.submissionService.getFileBySubmission(
           this.submissions[current]
         );

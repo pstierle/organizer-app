@@ -23,6 +23,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { UniversitiesEffects } from './_store/universities/universities.effects';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { submissionReducer } from './_store/submissions/submissions.reducer';
+import { ExcerciseSheetEffects } from './_store/excercise-sheets/excercise-sheets.effects';
+import { excerciseSheetReducer } from './_store/excercise-sheets/excercise-sheets.reducer';
 
 function initializeUser(authService: AuthService): () => any {
   return () => authService.init();
@@ -45,6 +47,7 @@ function initializeUser(authService: AuthService): () => any {
       CourseEffects,
       SubjectEffects,
       SubmissionEffects,
+      ExcerciseSheetEffects,
     ]),
     StoreModule.forRoot({
       universityState: universitiesReducer,
@@ -52,6 +55,7 @@ function initializeUser(authService: AuthService): () => any {
       courseState: coursesReducer,
       subjectState: subjectsReducer,
       submissionState: submissionReducer,
+      excerciseSheetState: excerciseSheetReducer,
     }),
   ],
   providers: [

@@ -22,7 +22,7 @@ export class SubjectsOverviewComponent
   implements OnInit, OnDestroy
 {
   showLoadAnim = false;
-  groupedBySemester!: IGroupedBySemester[];
+  groupedBySemester$!: Observable<IGroupedBySemester[]>;
   currentRoute = '';
 
   constructor(
@@ -35,12 +35,8 @@ export class SubjectsOverviewComponent
 
   ngOnInit(): void {
     this.store.dispatch(getSubjects());
-    this.store
-      .select(selectGroupedBySemester)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((grouped) => {
-        this.groupedBySemester = grouped;
-      });
+    this.groupedBySemester$ = this.store.select(selectGroupedBySemester);
+
     this.store
       .select(isLoading)
       .pipe(takeUntil(this.destroy$))
