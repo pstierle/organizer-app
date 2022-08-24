@@ -15,7 +15,7 @@ export const submissionReducer = createReducer(
     actions.getSubmissions,
     actions.addSubmission,
     actions.deleteSubmission,
-    (state) => {
+    (state): SubmissionState => {
       return {
         ...state,
         error: undefined,
@@ -24,32 +24,35 @@ export const submissionReducer = createReducer(
     }
   ),
 
-  on(actions.getSubmissionsSuccess, (state, { submissions }) => {
+  on(
+    actions.getSubmissionsSuccess,
+    (state, { submissions }): SubmissionState => {
+      return {
+        ...state,
+        current: 'success',
+        submissions: submissions,
+      };
+    }
+  ),
+
+  on(actions.deleteSubmissionSuccess, (state, { id }): SubmissionState => {
     return {
       ...state,
       current: 'success',
-      submissions: submissions,
+      submissions: state.submissions.filter((s) => s.id !== id),
     };
   }),
 
-  on(actions.deleteSubmissionSuccess, (state, { id }) => {
-    return {
-      ...state,
-      current: 'success',
-      subjects: state.submissions.filter((s) => s.id !== id),
-    };
-  }),
-
-  on(actions.addSubmissionSuccess, (state, { submission }) => {
+  on(actions.addSubmissionSuccess, (state, { submission }): SubmissionState => {
     console.log(submission);
     return {
       ...state,
       current: 'success',
-      subjects: [...state.submissions, submission],
+      submissions: [...state.submissions, submission],
     };
   }),
 
-  on(actions.handleError, (state, { error }) => {
+  on(actions.handleError, (state, { error }): SubmissionState => {
     return {
       ...state,
       current: 'error',

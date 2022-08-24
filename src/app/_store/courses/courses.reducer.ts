@@ -11,7 +11,7 @@ export const initialState: CourseState = {
 
 export const coursesReducer = createReducer(
   initialState,
-  on(actions.getCourses, (state) => {
+  on(actions.getCourses, (state): CourseState => {
     return {
       ...state,
       error: undefined,
@@ -20,7 +20,7 @@ export const coursesReducer = createReducer(
   }),
 
   // GET
-  on(actions.getCoursesSuccess, (state, { courses }) => {
+  on(actions.getCoursesSuccess, (state, { courses }): CourseState => {
     return {
       ...state,
       current: 'success',
@@ -29,7 +29,7 @@ export const coursesReducer = createReducer(
   }),
 
   // ERROR
-  on(actions.handleError, (state, { error }) => {
+  on(actions.handleError, (state, { error }): CourseState => {
     return {
       ...state,
       current: 'error',

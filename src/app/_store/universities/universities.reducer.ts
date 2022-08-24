@@ -11,7 +11,7 @@ export const initialState: UniversitiesState = {
 
 export const universitiesReducer = createReducer(
   initialState,
-  on(actions.getUniversities, (state) => {
+  on(actions.getUniversities, (state): UniversitiesState => {
     return {
       ...state,
       error: undefined,
@@ -20,16 +20,19 @@ export const universitiesReducer = createReducer(
   }),
 
   // GET
-  on(actions.getUniversitiesSuccess, (state, { universities }) => {
-    return {
-      ...state,
-      current: 'success',
-      universities: universities,
-    };
-  }),
+  on(
+    actions.getUniversitiesSuccess,
+    (state, { universities }): UniversitiesState => {
+      return {
+        ...state,
+        current: 'success',
+        universities: universities,
+      };
+    }
+  ),
 
   // ERROR
-  on(actions.handleError, (state, { error }) => {
+  on(actions.handleError, (state, { error }): UniversitiesState => {
     return {
       ...state,
       current: 'error',

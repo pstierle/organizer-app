@@ -11,7 +11,7 @@ export const initialState: CourseAreasState = {
 
 export const courseAreaReducer = createReducer(
   initialState,
-  on(actions.getCourseAreas, (state) => {
+  on(actions.getCourseAreas, (state): CourseAreasState => {
     return {
       ...state,
       error: undefined,
@@ -20,16 +20,19 @@ export const courseAreaReducer = createReducer(
   }),
 
   // GET
-  on(actions.getCourseAreasSuccess, (state, { courseAreas }) => {
-    return {
-      ...state,
-      current: 'success',
-      courseAreas: courseAreas,
-    };
-  }),
+  on(
+    actions.getCourseAreasSuccess,
+    (state, { courseAreas }): CourseAreasState => {
+      return {
+        ...state,
+        current: 'success',
+        courseAreas: courseAreas,
+      };
+    }
+  ),
 
   // ERROR
-  on(actions.handleError, (state, { error }) => {
+  on(actions.handleError, (state, { error }): CourseAreasState => {
     return {
       ...state,
       current: 'error',

@@ -16,7 +16,7 @@ export const excerciseSheetReducer = createReducer(
     actions.addExcerciseSheet,
     actions.updateExcerciseSheet,
     actions.deleteExcerciseSheet,
-    (state) => {
+    (state): ExcerciseSheetState => {
       return {
         ...state,
         error: undefined,
@@ -25,44 +25,56 @@ export const excerciseSheetReducer = createReducer(
     }
   ),
 
-  on(actions.getExcerciseSheetsSuccess, (state, { excerciseSheets }) => {
-    return {
-      ...state,
-      current: 'success',
-      excerciseSheets: excerciseSheets,
-    };
-  }),
+  on(
+    actions.getExcerciseSheetsSuccess,
+    (state, { excerciseSheets }): ExcerciseSheetState => {
+      return {
+        ...state,
+        current: 'success',
+        excerciseSheets: excerciseSheets,
+      };
+    }
+  ),
 
-  on(actions.deleteExcerciseSheetSuccess, (state, { id }) => {
-    return {
-      ...state,
-      current: 'success',
-      subjects: state.excerciseSheets.filter((s) => s.id !== id),
-    };
-  }),
+  on(
+    actions.deleteExcerciseSheetSuccess,
+    (state, { id }): ExcerciseSheetState => {
+      return {
+        ...state,
+        current: 'success',
+        excerciseSheets: state.excerciseSheets.filter((s) => s.id !== id),
+      };
+    }
+  ),
 
-  on(actions.updateExcerciseSheetSuccess, (state, { excerciseSheet }) => {
-    let updated = state.excerciseSheets.slice();
-    const index = updated.findIndex((s) => s.id === excerciseSheet.id);
-    updated[index] = excerciseSheet;
+  on(
+    actions.updateExcerciseSheetSuccess,
+    (state, { excerciseSheet }): ExcerciseSheetState => {
+      let updated = state.excerciseSheets.slice();
+      const index = updated.findIndex((s) => s.id === excerciseSheet.id);
+      updated[index] = excerciseSheet;
 
-    return {
-      ...state,
-      current: 'success',
-      subjects: updated,
-    };
-  }),
+      return {
+        ...state,
+        current: 'success',
+        excerciseSheets: updated,
+      };
+    }
+  ),
 
-  on(actions.addExcerciseSheetSuccess, (state, { excerciseSheet }) => {
-    console.log('adding');
-    return {
-      ...state,
-      current: 'success',
-      subjects: [...state.excerciseSheets, excerciseSheet],
-    };
-  }),
+  on(
+    actions.addExcerciseSheetSuccess,
+    (state, { excerciseSheet }): ExcerciseSheetState => {
+      console.log('adding');
+      return {
+        ...state,
+        current: 'success',
+        excerciseSheets: [...state.excerciseSheets, excerciseSheet],
+      };
+    }
+  ),
 
-  on(actions.handleError, (state, { error }) => {
+  on(actions.handleError, (state, { error }): ExcerciseSheetState => {
     return {
       ...state,
       current: 'error',
