@@ -101,6 +101,6 @@ export class SubjectDetailPage
   }
 
   get randomArray() {
-    return Array.from(Array(10).keys());
+    return Array.from(Array(3).keys());
   }
 }

@@ -24,20 +24,18 @@
     </div>
     <div *ngIf="subject; else sheetAnim" class="flex flex-col gap-5">
       <app-excercise-sheet
-        *ngFor="let sheet of excerciseSheets$ | async; let i = index"
+        *ngFor="let sheet of excerciseSheets$ | async"
         [sheet]="sheet"
       >
       </app-excercise-sheet>
     </div>
     <ng-template #sheetAnim>
-      <div class="flex flex-wrap gap-5 justify-start">
-        <app-container
+      <div class="flex flex-col gap-5">
+        <app-excercise-sheet
           *ngFor="let number of randomArray"
           [loadAnimation]="true"
-          header="Placeholder"
         >
-          <div class="w-40 h-56"></div>
-        </app-container>
+        </app-excercise-sheet>
       </div>
     </ng-template>
   </div>

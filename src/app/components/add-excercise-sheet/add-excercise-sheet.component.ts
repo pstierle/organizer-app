@@ -24,5 +24,6 @@ export class AddExcerciseSheetComponent {
         },
       })
     );
+    this.open = false;
   }
 }

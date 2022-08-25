@@ -1,3 +1,5 @@
+import { ExcerciseSheetSearchComponent } from './excercise-sheet-search/excercise-sheet-search.component';
+import { NoticeComponent } from './notice/notice.component';
 import { FadeTransitionComponent } from './transitions/fade-transition/fade-transition.component';
 import { FileViewerComponent } from './modal/file-viewer/file-viewer.component';
 import { DropdownComponent } from './dropdown/dropdown.component';
@@ -25,6 +27,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UpdateProfileImageComponent } from './update-profile-image/update-profile-image.component';
 import { AddExcerciseSheetComponent } from './add-excercise-sheet/add-excercise-sheet.component';
+import { SelectComponent } from './select/select.component';
 
 @NgModule({
   imports: [
@@ -58,6 +61,9 @@ import { AddExcerciseSheetComponent } from './add-excercise-sheet/add-excercise-
     DropdownComponent,
     FileViewerComponent,
     FadeTransitionComponent,
+    NoticeComponent,
+    ExcerciseSheetSearchComponent,
+    SelectComponent,
   ],
   exports: [
     ButtonComponent,
@@ -82,6 +88,9 @@ import { AddExcerciseSheetComponent } from './add-excercise-sheet/add-excercise-
     DropdownComponent,
     FileViewerComponent,
     FadeTransitionComponent,
+    NoticeComponent,
+    ExcerciseSheetSearchComponent,
+    SelectComponent,
   ],
   providers: [AddSubjectComponent],
 })

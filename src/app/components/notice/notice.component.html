@@ -1,0 +1,13 @@
+<div
+  class="relative hover:cursor-pointer"
+  (mouseenter)="hovered = true"
+  (mouseleave)="hovered = false"
+>
+  <ng-content> </ng-content>
+  <div
+    class="absolute p-2 rounded ring-[1.7px] ring-blue-400 mt-2 bg-neutral-800"
+    *ngIf="hovered"
+  >
+    <p class="text-neutral-200">{{ note }}</p>
+  </div>
+</div>

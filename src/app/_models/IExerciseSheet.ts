@@ -7,4 +7,5 @@ export interface IExerciseSheet {
   user_id: string;
   subject_id: string;
   topic?: string;
+  public: boolean;
 }

@@ -1,5 +1,5 @@
 import { ISelectOption } from './../_models/ISelectOption';
-export const nullableOptions = (options: ISelectOption[]) => [
-  { label: 'Keine Angabe', value: '' },
-  ...options,
-];
+export const nullableOptions = (
+  nullableLabel: string,
+  options: ISelectOption[]
+) => [{ label: nullableLabel, value: '' }, ...options];

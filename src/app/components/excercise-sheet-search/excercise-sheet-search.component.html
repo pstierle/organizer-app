@@ -1,0 +1,20 @@
+<div class="flex flex-col gap-5">
+  <div class="flex gap-2 items-center">
+    <p class="text-neutral-200 text-lg">Nach Veröffentlichungen suchen</p>
+    <app-input
+      placeholder="Topic"
+      (modelChange)="handleTopicChange($event)"
+      [(model)]="topicQuery"
+    ></app-input>
+    <app-select
+      [options]="universityOptions"
+      [(model)]="universityIdQuery"
+      (modelChange)="handleUniversityChange($event)"
+    ></app-select>
+    <app-select
+      [options]="courseOptions"
+      [(model)]="courseIdQuery"
+      (modelChange)="handleCourseChange($event)"
+    ></app-select>
+  </div>
+</div>

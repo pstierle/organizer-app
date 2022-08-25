@@ -72,14 +72,17 @@ export class UpdateUserComponent
       .select(selectUniversitiesAsOptions)
       .pipe(takeUntil(this.destroy$))
       .subscribe((universitiesAsOptions) => {
-        this.universityOptions = nullableOptions(universitiesAsOptions);
+        this.universityOptions = nullableOptions(
+          'Keine Angabe',
+          universitiesAsOptions
+        );
       });
 
     this.store
       .select(selectCoursesAsOptions)
       .pipe(takeUntil(this.destroy$))
       .subscribe((coursesAsOptions) => {
-        this.courseOptions = nullableOptions(coursesAsOptions);
+        this.courseOptions = nullableOptions('Keine Angabe', coursesAsOptions);
       });
 
     this.authService
