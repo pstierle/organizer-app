@@ -2,22 +2,12 @@ import {
   ExcerciseSheetService,
   ExcerciseSheetQuery,
 } from './../../_services/excercise-sheet.service';
-import { IUser } from './../../_models/IUser';
 import { IExerciseSheet } from 'src/app/_models/IExerciseSheet';
 import { nullableOptions } from 'src/app/_utils/select.util';
 import { BaseComponent } from './../../_utils/base.component';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import {
-  takeUntil,
-  Observable,
-  of,
-  BehaviorSubject,
-  combineLatest,
-  Subject,
-  debounce,
-  debounceTime,
-} from 'rxjs';
+import { takeUntil, Observable, of, Subject, debounceTime } from 'rxjs';
 import { ISelectOption } from 'src/app/_models/ISelectOption';
 import { getCourses } from 'src/app/_store/courses/courses.actions';
 import { selectCoursesAsOptions } from 'src/app/_store/courses/courses.select';
@@ -33,7 +23,7 @@ export class ExcerciseSheetSearchComponent extends BaseComponent {
   universityOptions: ISelectOption[] = [];
   courseOptions: ISelectOption[] = [];
   query$ = new Subject<ExcerciseSheetQuery>();
-  results: IExerciseSheet[] = [];
+  results$: Observable<IExerciseSheet[]> = of([]);
   topicQuery = '';
   universityIdQuery = '';
   courseIdQuery = '';
@@ -65,9 +55,9 @@ export class ExcerciseSheetSearchComponent extends BaseComponent {
 
     this.query$
       .pipe(takeUntil(this.destroy$), debounceTime(400))
-      .subscribe(async (query) => {
-        this.results =
-          await this.excerciseSheetService.fetchPublicSheetsByQuery(query);
+      .subscribe((query) => {
+        this.results$ =
+          this.excerciseSheetService.fetchPublicSheetsByQuery(query);
       });
   }
 

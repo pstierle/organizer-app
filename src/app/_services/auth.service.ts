@@ -10,12 +10,12 @@ import {
 import { environment } from 'src/environments/environment';
 import { NotificationService } from './notification.service';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { BaseService } from './supabase.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
-  private supabase: SupabaseClient;
+export class AuthService extends BaseService<IUser> {
   private userSubject = new BehaviorSubject<IUser | undefined>(undefined);
   private profileImageSubject = new BehaviorSubject<Blob | undefined>(
     undefined
@@ -25,10 +25,7 @@ export class AuthService {
     private notificationService: NotificationService,
     private router: Router
   ) {
-    this.supabase = createClient(
-      environment.supabaseUrl,
-      environment.supabaseKey
-    );
+    super('users');
   }
 
   get authUser() {
@@ -183,6 +180,10 @@ export class AuthService {
   async setUser() {
     const userData = await this.getUser();
     this.userSubject.next(userData);
+  }
+
+  fetchUserById(id: string) {
+    return this.findById(id);
   }
 
   handleError(message: string) {

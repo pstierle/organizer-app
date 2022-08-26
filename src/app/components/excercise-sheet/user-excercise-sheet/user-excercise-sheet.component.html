@@ -1,27 +1,17 @@
-<div
-  class="flex flex-col justify-between p-5 border rounded border-gray-600"
-  [ngClass]="isLoading || loadAnimation ? 'pulse' : ''"
->
-  <div class="flex justify-between border-b-2 border-blue-400 pb-2">
-    <div class="flex items-center gap-2">
-      <p
-        class="text-neutral-200"
-        [ngClass]="isLoading || loadAnimation ? 'pulse' : ''"
-      >
-        Blatt {{ sheet?.number }}
-      </p>
-      <app-input
-        placeholder="Themenbereich (max-10)"
-        [(model)]="topicModel"
-        (blur)="handleBlur()"
-        [loadAnimation]="isLoading || loadAnimation"
-      >
-        <fa-icon [icon]="pencilIcon"></fa-icon>
-      </app-input>
-    </div>
-    <div class="flex items-center gap-2">
+<app-excercise-sheet-detail
+  [sheetNumber]="sheet?.number ?? 0"
+  [countByType]="countByType"
+  ><div class="flex justify-between gap-5">
+    <app-input
+      placeholder="Themenbereich (max-10)"
+      [(model)]="topicModel"
+      (blur)="handleBlur()"
+      [loadAnimation]="sheetLoadAnimation"
+    >
+      <fa-icon [icon]="pencilIcon"></fa-icon>
+    </app-input>
+    <div class="flex items-center gap-2" action>
       <app-notice
-        *ngIf="!sheet?.public"
         note="Wenn du dieses Blatt veröffentlichst können alle Nutzer die Inhalte dieses Blatts sehen."
       >
         <fa-icon [icon]="questionIcon"></fa-icon>
@@ -29,7 +19,7 @@
       <app-button
         (click)="handlePublishing()"
         [style]="'primary'"
-        [loadAnimation]="isLoading || loadAnimation"
+        [loadAnimation]="sheetLoadAnimation"
       >
         <p>{{ sheet?.public ? "Verstecken" : "Veröffentlichen" }}</p>
       </app-button>
@@ -37,7 +27,7 @@
       <app-button
         (click)="handleDelete()"
         [style]="'danger'"
-        [loadAnimation]="isLoading || loadAnimation"
+        [loadAnimation]="sheetLoadAnimation"
       >
         <div class="flex items-center gap-3">
           <p>Löschen</p>
@@ -46,7 +36,8 @@
       </app-button>
     </div>
   </div>
-  <div class="flex flex-col gap-4 p-2">
+
+  <div class="flex flex-col gap-4 p-2" submissions>
     <div
       class="flex justify-between items-center"
       *ngFor="let type of submissionTypes"
@@ -74,4 +65,4 @@
       </div>
     </div>
   </div>
-</div>
+</app-excercise-sheet-detail>

@@ -1,3 +1,5 @@
+import { IUser } from './../_models/IUser';
+import { Observable } from 'rxjs';
 import { IExerciseSheet } from './../_models/IExerciseSheet';
 import { Injectable } from '@angular/core';
 import { BaseService } from './supabase.service';
@@ -28,18 +30,16 @@ export class ExcerciseSheetService extends BaseService<IExerciseSheet> {
     ]);
   }
 
-  async fetchPublicSheetsByQuery(query: ExcerciseSheetQuery) {
-    const { data } = await this.supabase
-      .from('excercise_sheets')
-      .select(
-        'id, number, user_id, subject_id, topic, public, users:user_id(name)'
-      )
-      .eq('public', true)
-      .eq('users.university_id', Number(query.universityId))
-      .eq('users.course_id', Number(query.courseId))
-      .ilike('topic', `%${query.topic}%`);
-
-    return data ?? [];
+  fetchPublicSheetsByQuery(query: ExcerciseSheetQuery) {
+    return this.find(
+      'id, number, user_id, subject_id, topic, public, user:user_id (name, university_id, course_id)',
+      [
+        ['public', 'eq', true],
+        ['user.university_id', 'eq', Number(query.universityId)],
+        ['user.course_id', 'eq', Number(query.courseId)],
+        ['topic', 'ilike', `%${query.topic}%`],
+      ]
+    );
   }
 
   updateExcerciseSheet(id: string, data: Partial<IExerciseSheet>) {

@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-5">
+<div class="flex flex-col gap-5 h-full">
   <div class="flex gap-2 items-center">
     <p class="text-neutral-200 text-lg">Nach Veröffentlichungen suchen</p>
     <app-input
@@ -17,4 +17,22 @@
       (modelChange)="handleCourseChange($event)"
     ></app-select>
   </div>
+  <div
+    class="w-full h-full flex items-center justify-center"
+    *ngIf="(results$ | async)?.length === 0; else results"
+  >
+    <p
+      class="text-neutral-200 text-lg px-4 py-2 border border-gray-600 rounded"
+    >
+      Keine Ergebisse gefunden.
+    </p>
+  </div>
+  <ng-template #results>
+    <div class="flex flex-wrap gap-5">
+      <app-public-excercise-sheet
+        *ngFor="let result of results$ | async"
+        [sheet]="result"
+      ></app-public-excercise-sheet>
+    </div>
+  </ng-template>
 </div>

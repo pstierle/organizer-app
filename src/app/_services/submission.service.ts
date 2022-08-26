@@ -2,6 +2,7 @@ import { AuthService } from './auth.service';
 import { Injectable } from '@angular/core';
 import { BaseService } from './supabase.service';
 import { ISubmission } from '../_models/ISubmission';
+import { IUser } from '../_models/IUser';
 
 @Injectable({
   providedIn: 'root',
@@ -11,13 +12,19 @@ export class SubmissionService extends BaseService<ISubmission> {
     super('submissions');
   }
 
-  getFilePath(submission: ISubmission) {
-    return 'private/' + this.authService.authUser?.id + '-' + submission.id;
+  getFilePath(userId: string, submission: ISubmission) {
+    return 'private/' + userId + '-' + submission.id;
   }
 
   fetchUserSubmissions() {
     return this.find('id, type, fileType, exercise_sheet_id', [
       ['user_id', 'eq', this.authService.authUser?.id],
+    ]);
+  }
+
+  fetchPublicSheetSubmissions(sheetId: string) {
+    return this.find('id, type, fileType, exercise_sheet_id', [
+      ['exercise_sheet_id', 'eq', sheetId],
     ]);
   }
 
@@ -28,23 +35,28 @@ export class SubmissionService extends BaseService<ISubmission> {
   uploadFile(submission: ISubmission, file: File) {
     this.supabase.storage
       .from('submissions')
-      .upload(this.getFilePath(submission), file);
+      .upload(
+        this.getFilePath(this.authService.authUser?.id ?? '', submission),
+        file
+      );
   }
 
   deleteFile(submission: ISubmission) {
     this.supabase.storage
       .from('submissions')
-      .remove([this.getFilePath(submission)]);
+      .remove([
+        this.getFilePath(this.authService.authUser?.id ?? '', submission),
+      ]);
   }
 
   deleteSubmission(id: string) {
     return this.delete(id);
   }
 
-  async getFileBySubmission(submission: ISubmission) {
+  async getFileBySubmission(userId: string, submission: ISubmission) {
     const { data } = await this.supabase.storage
       .from('submissions')
-      .download(this.getFilePath(submission));
+      .download(this.getFilePath(userId, submission));
 
     return data;
   }

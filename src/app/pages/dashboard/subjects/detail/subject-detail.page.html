@@ -22,20 +22,20 @@
         >Fach löschen</app-button
       >
     </div>
-    <div *ngIf="subject; else sheetAnim" class="flex flex-col gap-5">
-      <app-excercise-sheet
+    <div
+      *ngIf="subject; else sheetAnim"
+      class="flex flex-wrap justify-start gap-5"
+    >
+      <app-user-excercise-sheet
         *ngFor="let sheet of excerciseSheets$ | async"
         [sheet]="sheet"
       >
-      </app-excercise-sheet>
+      </app-user-excercise-sheet>
     </div>
     <ng-template #sheetAnim>
-      <div class="flex flex-col gap-5">
-        <app-excercise-sheet
-          *ngFor="let number of randomArray"
-          [loadAnimation]="true"
-        >
-        </app-excercise-sheet>
+      <div class="flex flex-wrap justify-start gap-5">
+        <app-user-excercise-sheet *ngFor="let number of randomArray">
+        </app-user-excercise-sheet>
       </div>
     </ng-template>
   </div>

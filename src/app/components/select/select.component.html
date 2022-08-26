@@ -1,7 +1,7 @@
 <div>
   <p class="text-sm">{{ label }}</p>
   <select
-    class="rounded focus:ring-[1.6px] ring-blue-400 outline-none border-none bg-neutral-700 py-1 px-2"
+    class="rounded focus:ring-[1.6px] ring-blue-400 outline-none border-none bg-neutral-700 py-1.5 px-2"
     [(ngModel)]="model"
     (ngModelChange)="modelChange.emit(model)"
     (focus)="doFocus()"
@@ -11,6 +11,7 @@
       *ngFor="let option of options"
       [value]="option.value"
       [selected]="option.value === defaultValue"
+      class="my-2 px-2 py-1 transition-colors"
     >
       {{ option.label }}
     </option>

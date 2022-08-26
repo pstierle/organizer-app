@@ -46,7 +46,7 @@ export class BaseService<T> {
     );
   }
 
-  findById(id: number, select = '*'): Observable<T> {
+  findById(id: string, select = '*'): Observable<T> {
     const query = this.supabase
       .from(this.resource)
       .select(select)

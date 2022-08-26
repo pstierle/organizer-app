@@ -5,7 +5,6 @@ import { FileViewerComponent } from './modal/file-viewer/file-viewer.component';
 import { DropdownComponent } from './dropdown/dropdown.component';
 import { ClickOutsideDirective } from './../_directives/click-outside.directive';
 import { SearchbarComponent } from './searchbar/searchbar.component';
-import { ExcerciseSheetComponent } from './excercise-sheet/excercise-sheet.component';
 import { DeleteSubjectComponent } from './modal/delete-subject/delete-subject.component';
 import { InputComponent } from './input/input.component';
 import { ExpansionCardComponent } from './expansion-card/expansion-card.component';
@@ -28,6 +27,9 @@ import { CommonModule } from '@angular/common';
 import { UpdateProfileImageComponent } from './update-profile-image/update-profile-image.component';
 import { AddExcerciseSheetComponent } from './add-excercise-sheet/add-excercise-sheet.component';
 import { SelectComponent } from './select/select.component';
+import { ExcerciseSheetDetailComponent } from './excercise-sheet/excercise-sheet-detail/excercise-sheet-detail.component';
+import { PublicExcerciseSheetComponent } from './excercise-sheet/public-excercise-sheet/public-excercise-sheet.component';
+import { UserExcerciseSheetComponent } from './excercise-sheet/user-excercise-sheet/user-excercise-sheet.component';
 
 @NgModule({
   imports: [
@@ -54,7 +56,6 @@ import { SelectComponent } from './select/select.component';
     ExpansionCardComponent,
     InputComponent,
     DeleteSubjectComponent,
-    ExcerciseSheetComponent,
     SearchbarComponent,
     ClickOutsideDirective,
     AddExcerciseSheetComponent,
@@ -64,6 +65,9 @@ import { SelectComponent } from './select/select.component';
     NoticeComponent,
     ExcerciseSheetSearchComponent,
     SelectComponent,
+    PublicExcerciseSheetComponent,
+    UserExcerciseSheetComponent,
+    ExcerciseSheetDetailComponent,
   ],
   exports: [
     ButtonComponent,
@@ -81,7 +85,6 @@ import { SelectComponent } from './select/select.component';
     ExpansionCardComponent,
     InputComponent,
     DeleteSubjectComponent,
-    ExcerciseSheetComponent,
     SearchbarComponent,
     ClickOutsideDirective,
     AddExcerciseSheetComponent,
@@ -91,6 +94,9 @@ import { SelectComponent } from './select/select.component';
     NoticeComponent,
     ExcerciseSheetSearchComponent,
     SelectComponent,
+    PublicExcerciseSheetComponent,
+    UserExcerciseSheetComponent,
+    ExcerciseSheetDetailComponent,
   ],
   providers: [AddSubjectComponent],
 })
