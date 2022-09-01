@@ -27,7 +27,7 @@
       class="flex flex-wrap justify-start gap-5"
     >
       <app-user-excercise-sheet
-        *ngFor="let sheet of excerciseSheets$ | async"
+        *ngFor="let sheet of excerciseSheets$ | async; let index"
         [sheet]="sheet"
       >
       </app-user-excercise-sheet>

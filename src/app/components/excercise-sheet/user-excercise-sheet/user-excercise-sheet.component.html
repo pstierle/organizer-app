@@ -1,7 +1,8 @@
 <app-excercise-sheet-detail
   [sheetNumber]="sheet?.number ?? 0"
   [countByType]="countByType"
-  ><div class="flex justify-between gap-5">
+>
+  <div class="p-4 flex flex-col gap-8">
     <app-input
       placeholder="Themenbereich (max-10)"
       [(model)]="topicModel"
@@ -10,7 +11,37 @@
     >
       <fa-icon [icon]="pencilIcon"></fa-icon>
     </app-input>
-    <div class="flex items-center gap-2" action>
+    <div class="flex gap-4 justify-evenly">
+      <div class="flex flex-col" *ngFor="let type of submissionTypes">
+        <p class="text-sm">
+          {{ type }}
+        </p>
+        <div class="flex items-center gap-2">
+          <p class="text-neutral-200">
+            {{ countByType[type] }}
+          </p>
+          <button
+            *ngIf="countByType[type] > 0"
+            (click)="handleOpenSubmission(type)"
+          >
+            <fa-icon [icon]="showIcon" class="hover:text-neutral-200"></fa-icon>
+          </button>
+          <app-file-input
+            accept=".jpg ,.jpeg ,.png"
+            [showFileName]="false"
+            (fileChange)="handleUploadFile($event, type)"
+            [id]="'add-submission-' + type"
+          >
+            <fa-icon
+              [icon]="uploadIcon"
+              class="hover:text-neutral-200 hover:cursor-pointer"
+              label
+            ></fa-icon>
+          </app-file-input>
+        </div>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
       <app-notice
         note="Wenn du dieses Blatt veröffentlichst können alle Nutzer die Inhalte dieses Blatts sehen."
       >
@@ -34,35 +65,6 @@
           <fa-icon [icon]="trashIcon"></fa-icon>
         </div>
       </app-button>
-    </div>
-  </div>
-
-  <div class="flex flex-col gap-4 p-2" submissions>
-    <div
-      class="flex justify-between items-center"
-      *ngFor="let type of submissionTypes"
-    >
-      <p>{{ type }} - {{ countByType[type] }}</p>
-      <div class="flex items-center gap-2">
-        <button
-          *ngIf="countByType[type] > 0"
-          (click)="handleOpenSubmission(type)"
-        >
-          <fa-icon [icon]="showIcon" class="hover:text-neutral-200"></fa-icon>
-        </button>
-        <app-file-input
-          accept=".jpg ,.jpeg ,.png"
-          [showFileName]="false"
-          (fileChange)="handleUploadFile($event, type)"
-          [id]="'add-submission-' + type"
-        >
-          <fa-icon
-            [icon]="uploadIcon"
-            class="hover:text-neutral-200 hover:cursor-pointer"
-            label
-          ></fa-icon>
-        </app-file-input>
-      </div>
     </div>
   </div>
 </app-excercise-sheet-detail>

@@ -115,7 +115,7 @@ export class UserExcerciseSheetComponent
         submission: {
           type,
           fileType: file.type,
-          exercise_sheet_id: this.sheet.id,
+          exercise_sheet_id: this.sheet?.id,
         },
         file,
       })

@@ -6,6 +6,6 @@ export interface IExerciseSheet {
   submissions: ISubmission[];
   user_id: string;
   subject_id: string;
-  topic?: string;
+  topic: string;
   public: boolean;
 }

@@ -12,6 +12,7 @@ export class AddExcerciseSheetComponent {
   @Input() subject_id?: string;
   open = false;
   selectedSheetNumber = 0;
+  topicModel = '';
 
   constructor(private store: Store) {}
 
@@ -21,6 +22,7 @@ export class AddExcerciseSheetComponent {
         excerciseSheet: {
           number: this.selectedSheetNumber,
           subject_id: this.subject_id,
+          topic: this.topicModel,
         },
       })
     );

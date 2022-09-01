@@ -1,12 +1,9 @@
 <div
-  class="flex flex-col p-5 gap-4 border rounded border-gray-600"
+  class="flex flex-col border rounded-3xl border-gray-600"
   [ngClass]="loadAnimation ? 'pulse' : ''"
 >
-  <div class="border-b-2 border-blue-400">
-    <p>Blatt - {{ sheetNumber }}</p>
+  <div class="bg-blue-400 rouded-t-2xl rounded-t-3xl px-4 py-2">
+    <p class="text-neutral-200">Blatt - {{ sheetNumber }}</p>
   </div>
-  <div class="flex flex-col gap-4">
-    <ng-content [select]="action"></ng-content>
-    <ng-content [select]="submissions"></ng-content>
-  </div>
+  <ng-content></ng-content>
 </div>
